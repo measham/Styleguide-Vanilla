@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mast</title>
+    <script>
+      (function () {
+        var docEl = document.documentElement;
+        docEl.classList.add("js");
+        function applyMode(isLight) {
+          docEl.classList.toggle("u-mode-light", isLight);
+          docEl.classList.toggle("u-mode-dark", !isLight);
+        }
+        try {
+          var savedTheme = localStorage.getItem("savedTheme");
+          var osQuery = window.matchMedia("(prefers-color-scheme: dark)");
+          applyMode(savedTheme !== null ? savedTheme === "light" : !osQuery.matches);
+          if (savedTheme === null) {
+            osQuery.addEventListener("change", function (e) {
+              try {
+                if (localStorage.getItem("savedTheme") !== null) return;
+              } catch (err) {}
+              applyMode(!e.matches);
+            });
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="preload" href="/fonts/GeneralSans-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/GeneralSans-Medium.woff2" as="font" type="font/woff2" crossorigin />
+    <meta name="theme-color" content="white" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1d1c1a" media="(prefers-color-scheme: dark)" />
+    <meta property="og:site_name" content="Mast" />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48 32x32 16x16" />
+    <link rel="apple-touch-icon" href="/webclip.png" />
+    <meta name="description" content="Mast is a lightweight, component-first CSS framework, in plain HTML, CSS and JavaScript." />
+    <meta property="og:title" content="Mast" />
+    <meta property="og:description" content="Mast is a lightweight, component-first CSS framework, in plain HTML, CSS and JavaScript." />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Mast" />
+    <meta
+      name="twitter:description"
+      content="Mast is a lightweight, component-first CSS framework, in plain HTML, CSS and JavaScript."
+    />
+  </head>
+  <body>
+    <div class="page-wrapper u-minh-100vh">
+      <main id="main" class="page-main">
+        <div class="styles__cover">
+          <div class="container">
+            <div class="u-d-flex cc-align-center">
+              <div class="styles__nav-logo">
+                <svg viewbox="0 0 101 27" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mast">
+                  <path
+                    d="M11.9187 26.6316H16.4157L23.1435 9.59964V26.6316H28.03V1.2076H21.5855L14.1849 20.0454L6.81977 1.2076H0.375244V26.6316H5.26175V9.74128L11.9187 26.6316Z"
+                    fill="currentColor"
+                  ></path>
+                  <path
+                    d="M50.2224 26.6316H55.9941L46.5044 1.2076H40.6264L31.0658 26.6316H36.4835L38.431 21.1785H48.3102L50.2224 26.6316ZM43.4237 7.08557L46.823 16.894H39.9536L43.4237 7.08557Z"
+                    fill="currentColor"
+                  ></path>
+                  <path
+                    d="M77.9103 18.7353C77.9103 14.9819 75.5025 12.9281 71.0409 12.0429L66.6855 11.1577C64.8442 10.8036 63.2508 10.06 63.2508 8.3249C63.2508 6.55443 64.738 5.06723 67.3583 5.06723C70.0494 5.06723 71.8907 6.87312 72.0678 9.52883H77.5208C77.1667 4.21741 72.9884 0.888916 67.2875 0.888916C61.799 0.888916 57.7978 4.14659 57.7978 8.679C57.7978 12.8927 60.7722 14.9819 64.6318 15.7255L68.8101 16.5399C70.9701 16.9648 72.2094 17.9209 72.2094 19.5143C72.2094 21.568 70.2619 22.772 67.5354 22.772C64.2423 22.772 62.4364 20.9661 62.2948 18.1687H56.8417C57.2312 23.551 61.2325 26.9857 67.6416 26.9857C74.0153 26.9857 77.9103 23.5864 77.9103 18.7353Z"
+                    fill="currentColor"
+                  ></path>
+                  <path
+                    d="M92.4503 26.6316V6.0587H100.488V1.2076H79.0656V6.0587H87.0681V26.6316H92.4503Z"
+                    fill="currentColor"
+                  ></path>
+                </svg>
+              </div>
+              <div class="styles__nav-version">v2.4</div>
+            </div>
+          </div>
+          <div class="container">
+            <h1>Style Guide</h1>
+            <p class="paragraph-lg u-mb-0">Get started with a lightweight CSS and component framework in plain HTML, CSS and JavaScript.</p>
+            <div class="u-border u-mb-md u-mt-md"></div>
+            <div class="row row-gap-button row-align-center">
+              <div class="col col-shrink col-md-12"><div class="eyebrow u-mb-0">Get started:</div></div>
+              <div class="col col-shrink"><a href="/styles" class="button">Styles</a></div>
+              <div class="col col-shrink"><a href="/components" class="button">Components</a></div>
+              <div class="col col-shrink"><a href="/basic-layouts" class="button cc-secondary">Basic Layouts</a></div>
+              <div class="col col-shrink">
+                <a href="/inspired-layouts" class="button cc-secondary">Inspired Layouts</a>
+              </div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col col-shrink u-mb-0">
+                <a href="https://nocodesupply.co/mast" target="_blank" rel="noopener" class="styles__ncsc-logo-link">
+                  <div class="styles__ncsc-logo">
+                    <svg viewBox="0 0 37 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <title>No-Code Supply Co.</title>
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M0 10.7309C0 9.97793 0.311832 9.25855 0.861381 8.74377L8.12411 1.94056C9.69479 0.469254 12.1377 0.469257 13.7084 1.94056L20.9711 8.74377C21.5206 9.25855 21.8325 9.97792 21.8325 10.7309V19.5934C21.8325 21.849 20.0039 23.6776 17.7483 23.6776H4.0842C1.82856 23.6776 0 21.849 0 19.5934V10.7309ZM6.80701 20.9548C7.55889 20.9548 8.16841 20.3452 8.16841 19.5934C8.16841 18.8415 7.55889 18.232 6.80701 18.232H4.0842C3.33232 18.232 2.7228 18.8415 2.7228 19.5934C2.7228 20.3452 3.33232 20.9548 4.0842 20.9548H6.80701ZM24.5553 19.5934V10.9658L36.855 10.9658V19.5934C36.855 21.849 35.0264 23.6776 32.7708 23.6776H23.1944C24.0489 22.5399 24.5553 21.1258 24.5553 19.5934ZM35.459 8.24296L24.4193 8.24296L20.4189 4.49569L23.1466 1.94056C24.7173 0.469254 27.1602 0.469257 28.7309 1.94056L35.459 8.24296Z"
+                        fill="currentColor"
+                      ></path>
+                    </svg>
+                  </div>
+                  <div>Built by No-Code Supply Co.</div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script type="module" src="/js/main.js"></script>
+  </body>
+</html>

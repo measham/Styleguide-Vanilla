@@ -1,0 +1,20 @@
+/*
+ * Mast, as the site's one stylesheet.
+ *
+ * Cascade layers keep the order predictable:
+ * tokens → base elements → layout → typography → components → style guide
+ * → utilities (utilities always win without needing !important).
+ *
+ * The framework's files are Mast's own, from Corey Moen's MIT-licensed
+ * rebuild (https://github.com/CoreyMoen/mast-astro) — see LICENSE.mast.
+ * styleguide.css styles the style-guide pages (`styles__*`) and nothing else.
+ */
+@layer tokens, base, layout, typography, components, styleguide, utilities;
+
+@import "./tokens.css" layer(tokens);
+@import "./base.css" layer(base);
+@import "./layout.css" layer(layout);
+@import "./typography.css" layer(typography);
+@import "./components.css" layer(components);
+@import "./styleguide.css" layer(styleguide);
+@import "./utilities.css" layer(utilities);

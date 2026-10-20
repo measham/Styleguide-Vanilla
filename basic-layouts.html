@@ -1,0 +1,834 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Basic Layouts</title>
+    <script>
+      (function () {
+        var docEl = document.documentElement;
+        docEl.classList.add("js");
+        function applyMode(isLight) {
+          docEl.classList.toggle("u-mode-light", isLight);
+          docEl.classList.toggle("u-mode-dark", !isLight);
+        }
+        try {
+          var savedTheme = localStorage.getItem("savedTheme");
+          var osQuery = window.matchMedia("(prefers-color-scheme: dark)");
+          applyMode(savedTheme !== null ? savedTheme === "light" : !osQuery.matches);
+          if (savedTheme === null) {
+            osQuery.addEventListener("change", function (e) {
+              try {
+                if (localStorage.getItem("savedTheme") !== null) return;
+              } catch (err) {}
+              applyMode(!e.matches);
+            });
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="preload" href="/fonts/GeneralSans-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/GeneralSans-Medium.woff2" as="font" type="font/woff2" crossorigin />
+    <meta name="theme-color" content="white" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1d1c1a" media="(prefers-color-scheme: dark)" />
+    <meta property="og:site_name" content="Mast" />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48 32x32 16x16" />
+    <link rel="apple-touch-icon" href="/webclip.png" />
+    <meta name="description" content="Common page sections built with the Mast structural components." />
+    <meta property="og:title" content="Basic Layouts" />
+    <meta property="og:description" content="Common page sections built with the Mast structural components." />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Basic Layouts" />
+    <meta name="twitter:description" content="Common page sections built with the Mast structural components." />
+  </head>
+  <body>
+    <div class="page-wrapper u-minh-100vh">
+      <a href="#" class="nav-banner">
+        <div class="container u-text-center"><div class="eyebrow u-mb-0">Mast — a minimal CSS framework</div></div>
+      </a>
+      <header class="nav">
+        <a id="skip-link" href="#main" class="nav-skip-link">Skip to Main Content</a>
+        <div class="container cc-nav">
+          <a href="/" class="nav-logo_link" aria-label="Home">
+            <svg
+              viewbox="0 0 101 27"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              role="img"
+              aria-label="Mast"
+              class="u-w-100"
+            >
+              <path
+                d="M11.9187 26.6316H16.4157L23.1435 9.59964V26.6316H28.03V1.2076H21.5855L14.1849 20.0454L6.81977 1.2076H0.375244V26.6316H5.26175V9.74128L11.9187 26.6316Z"
+                fill="currentColor"
+              ></path>
+              <path
+                d="M50.2224 26.6316H55.9941L46.5044 1.2076H40.6264L31.0658 26.6316H36.4835L38.431 21.1785H48.3102L50.2224 26.6316ZM43.4237 7.08557L46.823 16.894H39.9536L43.4237 7.08557Z"
+                fill="currentColor"
+              ></path>
+              <path
+                d="M77.9103 18.7353C77.9103 14.9819 75.5025 12.9281 71.0409 12.0429L66.6855 11.1577C64.8442 10.8036 63.2508 10.06 63.2508 8.3249C63.2508 6.55443 64.738 5.06723 67.3583 5.06723C70.0494 5.06723 71.8907 6.87312 72.0678 9.52883H77.5208C77.1667 4.21741 72.9884 0.888916 67.2875 0.888916C61.799 0.888916 57.7978 4.14659 57.7978 8.679C57.7978 12.8927 60.7722 14.9819 64.6318 15.7255L68.8101 16.5399C70.9701 16.9648 72.2094 17.9209 72.2094 19.5143C72.2094 21.568 70.2619 22.772 67.5354 22.772C64.2423 22.772 62.4364 20.9661 62.2948 18.1687H56.8417C57.2312 23.551 61.2325 26.9857 67.6416 26.9857C74.0153 26.9857 77.9103 23.5864 77.9103 18.7353Z"
+                fill="currentColor"
+              ></path>
+              <path
+                d="M92.4503 26.6316V6.0587H100.488V1.2076H79.0656V6.0587H87.0681V26.6316H92.4503Z"
+                fill="currentColor"
+              ></path>
+            </svg>
+          </a>
+          <button type="button" class="nav-menu_btn" aria-label="Open menu">
+            <span class="nav-menu_btn-bar cc-top"></span>
+            <span class="nav-menu_btn-bar cc-middle"></span>
+            <span class="nav-menu_btn-bar cc-bottom"></span>
+          </button>
+          <nav class="nav-menu" aria-label="Main">
+            <div class="nav-dropdown_overlay"></div>
+            <div class="nav-menu_container">
+              <a href="#" class="nav-link">Static Link</a>
+              <div class="nav-dropdown">
+                <button type="button" class="nav-link cc-dropdown-btn">
+                  <span>Simple Drop</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="100%"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    class="nav-dropdown_arrow"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M16.293 9.29297L12 13.586L7.70697 9.29297L6.29297 10.707L12 16.414L17.707 10.707L16.293 9.29297Z"
+                      fill="currentColor"
+                    ></path>
+                  </svg>
+                </button>
+                <div class="nav-dropdown_content">
+                  <a href="#" class="nav-link cc-dropdown-link">Link 1</a>
+                  <a href="#" class="nav-link cc-dropdown-link">Link 2</a>
+                  <a href="#" class="nav-link cc-dropdown-link">Link 3</a>
+                </div>
+              </div>
+              <div class="nav-dropdown cc-mega">
+                <button type="button" class="nav-link cc-dropdown-btn">
+                  <span>Mega Drop</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="100%"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    class="nav-dropdown_arrow"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M16.293 9.29297L12 13.586L7.70697 9.29297L6.29297 10.707L12 16.414L17.707 10.707L16.293 9.29297Z"
+                      fill="currentColor"
+                    ></path>
+                  </svg>
+                </button>
+                <div class="nav-dropdown_content cc-mega">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col col-lg-3 col-md-6 col-sm-12">
+                        <h2 class="eyebrow">Category</h2>
+                        <ul role="list" class="u-mb-0 u-list-unstyled">
+                          <li><a href="#" class="nav-link cc-dropdown-link">Link 1</a></li>
+                          <li><a href="#" class="nav-link cc-dropdown-link">Link 2</a></li>
+                          <li class="u-mb-0"><a href="#" class="nav-link cc-dropdown-link">Link 3</a></li>
+                        </ul>
+                      </div>
+                      <div class="col col-lg-3 col-md-6 col-sm-12">
+                        <h2 class="eyebrow">Category</h2>
+                        <ul role="list" class="u-mb-0 u-list-unstyled">
+                          <li><a href="#" class="nav-link cc-dropdown-link">Link 1</a></li>
+                          <li><a href="#" class="nav-link cc-dropdown-link">Link 2</a></li>
+                          <li class="u-mb-0"><a href="#" class="nav-link cc-dropdown-link">Link 3</a></li>
+                        </ul>
+                      </div>
+                      <div class="col col-lg-3 col-md-6 col-sm-12">
+                        <h2 class="eyebrow">Category</h2>
+                        <ul role="list" class="u-mb-0 u-list-unstyled">
+                          <li><a href="#" class="nav-link cc-dropdown-link">Link 1</a></li>
+                          <li><a href="#" class="nav-link cc-dropdown-link">Link 2</a></li>
+                          <li class="u-mb-0"><a href="#" class="nav-link cc-dropdown-link">Link 3</a></li>
+                        </ul>
+                      </div>
+                      <div class="col col-lg-3 col-md-6 col-sm-12">
+                        <h2 class="eyebrow">Category</h2>
+                        <ul role="list" class="u-mb-0 u-list-unstyled">
+                          <li><a href="#" class="nav-link cc-dropdown-link">Link 1</a></li>
+                          <li><a href="#" class="nav-link cc-dropdown-link">Link 2</a></li>
+                          <li class="u-mb-0"><a href="#" class="nav-link cc-dropdown-link">Link 3</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
+          <div class="nav-cta-wrapper"><a href="#" class="button">Primary CTA</a></div>
+        </div>
+      </header>
+      <main id="main" class="page-main">
+        <header class="section">
+          <div class="container">
+            <div class="row row-justify-center">
+              <div class="col col-9">
+                <div class="content-wrap cc-center">
+                  <div class="eyebrow cc-rule">Lorem ipsum</div>
+                  <h1>A simple header</h1>
+                  <div class="rich-text">
+                    <p>
+                      Lorem ipsum dolor sit amet consectetur adipiscing elit enim porttitor, ornare luctus dignissim
+                      posuere platea aliquam turpis taciti fusce, diam arcu mollis phasellus mattis ad suspendisse
+                      integer.
+                    </p>
+                  </div>
+                  <div class="row row-justify-center row-align-center row-gap-button">
+                    <div class="col col-shrink"><a href="#" class="button">Button</a></div>
+                    <div class="col col-shrink"><a href="#" class="button cc-secondary">Button</a></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+        <section class="section cc-alt">
+          <div class="container">
+            <div class="row row-justify-between row-align-center">
+              <div class="col col-5">
+                <div class="eyebrow cc-rule">Lorem ipsum</div>
+                <h2 class="h1">Another header</h2>
+                <div class="rich-text">
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipiscing elit enim porttitor, ornare luctus dignissim
+                    posuere platea aliquam turpis taciti fusce, diam arcu mollis phasellus mattis ad suspendisse
+                    integer.
+                  </p>
+                </div>
+                <div class="row row-gap-button">
+                  <div class="col col-shrink"><a href="#" class="button">Button</a></div>
+                  <div class="col col-shrink"><a href="#" class="button cc-secondary">Button</a></div>
+                </div>
+              </div>
+              <div class="col col-6">
+                <div class="card">
+                  <div class="img-component cc-1x1">
+                    <img
+                      src="/images/post4.webp"
+                      alt=""
+                      loading="lazy"
+                      class="u-img-cover"
+                      sizes="(max-width: 800px) 100vw, 800px"
+                      srcset="
+                        /images/post4-p-500.webp   500w,
+                        /images/post4-p-800.webp   800w,
+                        /images/post4-p-1080.webp 1080w,
+                        /images/post4-p-1600.webp 1600w,
+                        /images/post4.webp        2000w
+                      "
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="section">
+          <div class="container">
+            <div class="row row-justify-center">
+              <div class="col col-9">
+                <div class="content-wrap cc-center">
+                  <div class="eyebrow cc-rule">Lorem ipsum</div>
+                  <h2>This is a section title</h2>
+                  <div class="rich-text">
+                    <p>
+                      Lorem ipsum dolor sit amet consectetur adipiscing elit enim porttitor, ornare luctus dignissim
+                      posuere platea aliquam turpis taciti fusce, diam arcu mollis phasellus mattis ad suspendisse
+                      integer.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="spacer-component"></div>
+            <div class="row">
+              <div class="col col-3">
+                <div class="content-wrap cc-center">
+                  <span class="icon-color cc-accent u-mb-sm">
+                    <span class="icon cc-lg" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                        <path
+                          d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                  <div class="rich-text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div>
+                </div>
+              </div>
+              <div class="col col-3">
+                <div class="content-wrap cc-center">
+                  <span class="icon-color cc-accent u-mb-sm">
+                    <span class="icon cc-lg" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                        <path
+                          d="M221.87,83.16A104.1,104.1,0,1,1,195.67,49l22.67-22.68a8,8,0,0,1,11.32,11.32l-96,96a8,8,0,0,1-11.32-11.32l27.72-27.72a40,40,0,1,0,17.87,31.09,8,8,0,1,1,16-.9,56,56,0,1,1-22.38-41.65L184.3,60.39a87.88,87.88,0,1,0,23.13,29.67,8,8,0,0,1,14.44-6.9Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                  <div class="rich-text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div>
+                </div>
+              </div>
+              <div class="col col-3">
+                <div class="content-wrap cc-center">
+                  <span class="icon-color cc-accent u-mb-sm">
+                    <span class="icon cc-lg" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                        <path
+                          d="M239.18,97.26A16.38,16.38,0,0,0,224.92,86l-59-4.76L143.14,26.15a16.36,16.36,0,0,0-30.27,0L90.11,81.23,31.08,86a16.46,16.46,0,0,0-9.37,28.86l45,38.83L53,211.75a16.38,16.38,0,0,0,24.5,17.82L128,198.49l50.53,31.08A16.4,16.4,0,0,0,203,211.75l-13.76-58.07,45-38.83A16.43,16.43,0,0,0,239.18,97.26Zm-15.34,5.47-48.7,42a8,8,0,0,0-2.56,7.91l14.88,62.8a.37.37,0,0,1-.17.48c-.18.14-.23.11-.38,0l-54.72-33.65a8,8,0,0,0-8.38,0L69.09,215.94c-.15.09-.19.12-.38,0a.37.37,0,0,1-.17-.48l14.88-62.8a8,8,0,0,0-2.56-7.91l-48.7-42c-.12-.1-.23-.19-.13-.5s.18-.27.33-.29l63.92-5.16A8,8,0,0,0,103,91.86l24.62-59.61c.08-.17.11-.25.35-.25s.27.08.35.25L153,91.86a8,8,0,0,0,6.75,4.92l63.92,5.16c.15,0,.24,0,.33.29S224,102.63,223.84,102.73Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                  <div class="rich-text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div>
+                </div>
+              </div>
+              <div class="col col-3">
+                <div class="content-wrap cc-center">
+                  <span class="icon-color cc-accent u-mb-sm">
+                    <span class="icon cc-lg" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                        <path
+                          d="M232,64H208V48a8,8,0,0,0-8-8H56a8,8,0,0,0-8,8V64H24A16,16,0,0,0,8,80V96a40,40,0,0,0,40,40h3.65A80.13,80.13,0,0,0,120,191.61V216H96a8,8,0,0,0,0,16h64a8,8,0,0,0,0-16H136V191.58c31.94-3.23,58.44-25.64,68.08-55.58H208a40,40,0,0,0,40-40V80A16,16,0,0,0,232,64ZM48,120A24,24,0,0,1,24,96V80H48v32q0,4,.39,8Zm144-8.9c0,35.52-29,64.64-64,64.9a64,64,0,0,1-64-64V56H192ZM232,96a24,24,0,0,1-24,24h-.5a81.81,81.81,0,0,0,.5-8.9V80h24Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                  <div class="rich-text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="section cc-alt">
+          <div class="container">
+            <div class="row row-justify-between">
+              <div class="col col-5">
+                <h2>This is a section title</h2>
+                <div class="rich-text">
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipiscing elit enim porttitor, ornare luctus dignissim
+                    posuere platea aliquam turpis taciti fusce, diam arcu mollis phasellus mattis ad suspendisse
+                    integer.
+                  </p>
+                </div>
+              </div>
+              <div class="col col-6">
+                <div class="row">
+                  <div class="col col-6">
+                    <span class="icon-color cc-accent u-mb-sm">
+                      <span class="icon cc-lg" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                          <path
+                            d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    <div class="rich-text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div>
+                  </div>
+                  <div class="col col-6">
+                    <span class="icon-color cc-accent u-mb-sm">
+                      <span class="icon cc-lg" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                          <path
+                            d="M221.87,83.16A104.1,104.1,0,1,1,195.67,49l22.67-22.68a8,8,0,0,1,11.32,11.32l-96,96a8,8,0,0,1-11.32-11.32l27.72-27.72a40,40,0,1,0,17.87,31.09,8,8,0,1,1,16-.9,56,56,0,1,1-22.38-41.65L184.3,60.39a87.88,87.88,0,1,0,23.13,29.67,8,8,0,0,1,14.44-6.9Z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    <div class="rich-text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div>
+                  </div>
+                  <div class="col col-6">
+                    <span class="icon-color cc-accent u-mb-sm">
+                      <span class="icon cc-lg" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                          <path
+                            d="M239.18,97.26A16.38,16.38,0,0,0,224.92,86l-59-4.76L143.14,26.15a16.36,16.36,0,0,0-30.27,0L90.11,81.23,31.08,86a16.46,16.46,0,0,0-9.37,28.86l45,38.83L53,211.75a16.38,16.38,0,0,0,24.5,17.82L128,198.49l50.53,31.08A16.4,16.4,0,0,0,203,211.75l-13.76-58.07,45-38.83A16.43,16.43,0,0,0,239.18,97.26Zm-15.34,5.47-48.7,42a8,8,0,0,0-2.56,7.91l14.88,62.8a.37.37,0,0,1-.17.48c-.18.14-.23.11-.38,0l-54.72-33.65a8,8,0,0,0-8.38,0L69.09,215.94c-.15.09-.19.12-.38,0a.37.37,0,0,1-.17-.48l14.88-62.8a8,8,0,0,0-2.56-7.91l-48.7-42c-.12-.1-.23-.19-.13-.5s.18-.27.33-.29l63.92-5.16A8,8,0,0,0,103,91.86l24.62-59.61c.08-.17.11-.25.35-.25s.27.08.35.25L153,91.86a8,8,0,0,0,6.75,4.92l63.92,5.16c.15,0,.24,0,.33.29S224,102.63,223.84,102.73Z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    <div class="rich-text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div>
+                  </div>
+                  <div class="col col-6">
+                    <span class="icon-color cc-accent u-mb-sm">
+                      <span class="icon cc-lg" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                          <path
+                            d="M232,64H208V48a8,8,0,0,0-8-8H56a8,8,0,0,0-8,8V64H24A16,16,0,0,0,8,80V96a40,40,0,0,0,40,40h3.65A80.13,80.13,0,0,0,120,191.61V216H96a8,8,0,0,0,0,16h64a8,8,0,0,0,0-16H136V191.58c31.94-3.23,58.44-25.64,68.08-55.58H208a40,40,0,0,0,40-40V80A16,16,0,0,0,232,64ZM48,120A24,24,0,0,1,24,96V80H48v32q0,4,.39,8Zm144-8.9c0,35.52-29,64.64-64,64.9a64,64,0,0,1-64-64V56H192ZM232,96a24,24,0,0,1-24,24h-.5a81.81,81.81,0,0,0,.5-8.9V80h24Z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    <div class="rich-text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="section">
+          <div class="container">
+            <div class="row row-justify-between row-align-center">
+              <div class="col col-6">
+                <div class="rich-text">
+                  <figure style="position: relative; width: 100%; max-width: 100%; padding-bottom: 56.25%">
+                    <iframe
+                      src="https://www.youtube.com/embed/bNRs1iKPoU4"
+                      title="Get Started with Mast"
+                      loading="lazy"
+                      allowfullscreen
+                      style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0"
+                    ></iframe>
+                  </figure>
+                </div>
+              </div>
+              <div class="col col-5 col-sm-first">
+                <h2>This is a section title</h2>
+                <div class="rich-text">
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipiscing elit, posuere bibendum per congue conubia justo
+                    laoreet, habitasse auctor vel pellentesque sapien aptent.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="section cc-alt u-p-0">
+          <div class="container" style="max-width: none">
+            <div class="row row-justify-between">
+              <div class="col col-5 col-md-12 col-lg-contain-left" style="align-self: center">
+                <h2 class="u-mb-sm">This is a section title</h2>
+                <div class="content-wrap" role="list">
+                  <div class="row row-gap-md u-mb-md" role="listitem">
+                    <div class="col col-shrink">
+                      <span class="icon-color cc-accent u-mb-sm">
+                        <span class="icon cc-lg" aria-hidden="true">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                            <path
+                              d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </div>
+                    <div class="col">
+                      <div class="rich-text">
+                        <p>
+                          Lorem ipsum dolor sit amet consectetur adipiscing elit enim porttitor, ornare luctus dignissim
+                          posuere platea aliquam turpis taciti fusce.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row row-gap-md" role="listitem">
+                    <div class="col col-shrink">
+                      <span class="icon-color cc-accent u-mb-sm">
+                        <span class="icon cc-lg" aria-hidden="true">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                            <path
+                              d="M221.87,83.16A104.1,104.1,0,1,1,195.67,49l22.67-22.68a8,8,0,0,1,11.32,11.32l-96,96a8,8,0,0,1-11.32-11.32l27.72-27.72a40,40,0,1,0,17.87,31.09,8,8,0,1,1,16-.9,56,56,0,1,1-22.38-41.65L184.3,60.39a87.88,87.88,0,1,0,23.13,29.67,8,8,0,0,1,14.44-6.9Z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </div>
+                    <div class="col">
+                      <div class="rich-text">
+                        <p>
+                          Lorem ipsum dolor sit amet consectetur adipiscing elit enim porttitor, ornare luctus dignissim
+                          posuere platea aliquam turpis taciti fusce.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-6 col-md-12">
+                <div class="img-component cc-1x1 u-h-100" style="max-width: 60rem">
+                  <img
+                    class="u-img-cover"
+                    src="/images/post3.webp"
+                    alt=""
+                    loading="lazy"
+                    sizes="(max-width: 800px) 100vw, 800px"
+                    srcset="
+                      /images/post3-p-500.webp   500w,
+                      /images/post3-p-800.webp   800w,
+                      /images/post3-p-1080.webp 1080w,
+                      /images/post3-p-1600.webp 1600w,
+                      /images/post3.webp        2000w
+                    "
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="section">
+          <div class="container">
+            <div class="row row-justify-between row-align-end row-gap-md">
+              <div class="col col-4"><h2 class="u-mb-0">This is a section title</h2></div>
+              <div class="col col-6">
+                <div class="rich-text">
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipiscing elit, posuere bibendum per congue conubia justo
+                    laoreet, habitasse auctor vel pellentesque sapien aptent.
+                  </p>
+                </div>
+                <a href="#" class="button">Button</a>
+              </div>
+            </div>
+            <div class="spacer-component"></div>
+            <div class="row">
+              <div class="col col-6">
+                <div class="card">
+                  <div class="card-body">
+                    <span class="icon-color cc-accent u-mb-sm">
+                      <span class="icon cc-lg" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                          <path
+                            d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    <div class="rich-text">
+                      <h3>This is another title</h3>
+                      <p>
+                        Lorem ipsum dolor sit amet consectetur adipiscing elit, posuere bibendum per congue conubia
+                        justo laoreet, habitasse auctor vel pellentesque sapien aptent.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-6">
+                <div class="card">
+                  <div class="card-body">
+                    <span class="icon-color cc-accent u-mb-sm">
+                      <span class="icon cc-lg" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                          <path
+                            d="M221.87,83.16A104.1,104.1,0,1,1,195.67,49l22.67-22.68a8,8,0,0,1,11.32,11.32l-96,96a8,8,0,0,1-11.32-11.32l27.72-27.72a40,40,0,1,0,17.87,31.09,8,8,0,1,1,16-.9,56,56,0,1,1-22.38-41.65L184.3,60.39a87.88,87.88,0,1,0,23.13,29.67,8,8,0,0,1,14.44-6.9Z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                    <div class="rich-text">
+                      <h3>This is another title</h3>
+                      <p>
+                        Lorem ipsum dolor sit amet consectetur adipiscing elit, posuere bibendum per congue conubia
+                        justo laoreet, habitasse auctor vel pellentesque sapien aptent.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="section cc-alt">
+          <div class="container">
+            <div class="row row-justify-between">
+              <div class="col col-4"><h2 class="u-mb-0">Have a question?</h2></div>
+              <div class="col col-7">
+                <div class="content-wrap" role="list">
+                  <details class="accordion-component u-mb-sm" role="listitem">
+                    <summary class="accordion-trigger">
+                      <div class="accordion-title"><h3 class="h4 u-mb-0">Lorem ipsum?</h3></div>
+                      <svg
+                        class="accordion-icon"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="100%"
+                        viewBox="0 0 32 32"
+                        fill="none"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M17 17L27.3137 17L27.3137 15H17V4.68631L15 4.68631L15 15H4.68629L4.68629 17L15 17V27.3137H17V17Z"
+                          fill="currentColor"
+                        ></path>
+                      </svg>
+                    </summary>
+                    <div data-accordion="content" class="accordion-content">
+                      <div class="accordion-content_spacer">
+                        <div class="rich-text">
+                          <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                            laboris nisi ut aliquip ex ea commodo consequat.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </details>
+                  <details class="accordion-component u-mb-sm" role="listitem">
+                    <summary class="accordion-trigger">
+                      <div class="accordion-title"><h3 class="h4 u-mb-0">Lorem ipsum?</h3></div>
+                      <svg
+                        class="accordion-icon"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="100%"
+                        viewBox="0 0 32 32"
+                        fill="none"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M17 17L27.3137 17L27.3137 15H17V4.68631L15 4.68631L15 15H4.68629L4.68629 17L15 17V27.3137H17V17Z"
+                          fill="currentColor"
+                        ></path>
+                      </svg>
+                    </summary>
+                    <div data-accordion="content" class="accordion-content">
+                      <div class="accordion-content_spacer">
+                        <div class="rich-text">
+                          <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                            laboris nisi ut aliquip ex ea commodo consequat.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </details>
+                  <details class="accordion-component" role="listitem">
+                    <summary class="accordion-trigger">
+                      <div class="accordion-title"><h3 class="h4 u-mb-0">Lorem ipsum?</h3></div>
+                      <svg
+                        class="accordion-icon"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="100%"
+                        viewBox="0 0 32 32"
+                        fill="none"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M17 17L27.3137 17L27.3137 15H17V4.68631L15 4.68631L15 15H4.68629L4.68629 17L15 17V27.3137H17V17Z"
+                          fill="currentColor"
+                        ></path>
+                      </svg>
+                    </summary>
+                    <div data-accordion="content" class="accordion-content">
+                      <div class="accordion-content_spacer">
+                        <div class="rich-text">
+                          <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                            laboris nisi ut aliquip ex ea commodo consequat.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </details>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer class="section cc-footer">
+        <div class="container">
+          <div class="row">
+            <div class="col col-sm-12">
+              <div class="row row-justify-between u-h-100">
+                <div class="col col-lg-12 col-sm-6">
+                  <a href="/" class="footer-logo_link" aria-label="Home">
+                    <svg
+                      viewbox="0 0 101 27"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      role="img"
+                      aria-label="Mast"
+                      class="u-w-100"
+                    >
+                      <path
+                        d="M11.9187 26.6316H16.4157L23.1435 9.59964V26.6316H28.03V1.2076H21.5855L14.1849 20.0454L6.81977 1.2076H0.375244V26.6316H5.26175V9.74128L11.9187 26.6316Z"
+                        fill="currentColor"
+                      ></path>
+                      <path
+                        d="M50.2224 26.6316H55.9941L46.5044 1.2076H40.6264L31.0658 26.6316H36.4835L38.431 21.1785H48.3102L50.2224 26.6316ZM43.4237 7.08557L46.823 16.894H39.9536L43.4237 7.08557Z"
+                        fill="currentColor"
+                      ></path>
+                      <path
+                        d="M77.9103 18.7353C77.9103 14.9819 75.5025 12.9281 71.0409 12.0429L66.6855 11.1577C64.8442 10.8036 63.2508 10.06 63.2508 8.3249C63.2508 6.55443 64.738 5.06723 67.3583 5.06723C70.0494 5.06723 71.8907 6.87312 72.0678 9.52883H77.5208C77.1667 4.21741 72.9884 0.888916 67.2875 0.888916C61.799 0.888916 57.7978 4.14659 57.7978 8.679C57.7978 12.8927 60.7722 14.9819 64.6318 15.7255L68.8101 16.5399C70.9701 16.9648 72.2094 17.9209 72.2094 19.5143C72.2094 21.568 70.2619 22.772 67.5354 22.772C64.2423 22.772 62.4364 20.9661 62.2948 18.1687H56.8417C57.2312 23.551 61.2325 26.9857 67.6416 26.9857C74.0153 26.9857 77.9103 23.5864 77.9103 18.7353Z"
+                        fill="currentColor"
+                      ></path>
+                      <path
+                        d="M92.4503 26.6316V6.0587H100.488V1.2076H79.0656V6.0587H87.0681V26.6316H92.4503Z"
+                        fill="currentColor"
+                      ></path>
+                    </svg>
+                  </a>
+                </div>
+                <div class="col col-shrink u-mt-auto">
+                  <div class="theme-toggle-component">
+                    <label class="theme-toggle-label">
+                      <span data-theme-toggle="dark-label" class="theme-toggle-state cc-base">
+                        <span class="icon-color u-mb-0">
+                          <span class="icon" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                              <path
+                                d="M240,96a8,8,0,0,1-8,8H216v16a8,8,0,0,1-16,0V104H184a8,8,0,0,1,0-16h16V72a8,8,0,0,1,16,0V88h16A8,8,0,0,1,240,96ZM144,56h8v8a8,8,0,0,0,16,0V56h8a8,8,0,0,0,0-16h-8V32a8,8,0,0,0-16,0v8h-8a8,8,0,0,0,0,16Zm72.77,97a8,8,0,0,1,1.43,8A96,96,0,1,1,95.07,37.8a8,8,0,0,1,10.6,9.06A88.07,88.07,0,0,0,209.14,150.33,8,8,0,0,1,216.77,153Zm-19.39,14.88c-1.79.09-3.59.14-5.38.14A104.11,104.11,0,0,1,88,64c0-1.79,0-3.59.14-5.38A80,80,0,1,0,197.38,167.86Z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                      </span>
+                      <span data-theme-toggle="light-label" class="theme-toggle-state cc-invert">
+                        <span class="icon-color u-mb-0">
+                          <span class="icon" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                              <path
+                                d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                      </span>
+                      <input
+                        type="checkbox"
+                        data-theme-toggle="checkbox"
+                        class="theme-toggle-checkbox"
+                        aria-label="Switch between dark and light mode"
+                      />
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col col-lg-9 col-sm-12">
+              <div class="row">
+                <div class="col col-lg-3 col-md-6 col-xs-12">
+                  <ul role="list" class="u-mb-0 u-list-unstyled">
+                    <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                    <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                    <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                    <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                    <li class="u-mb-0"><a href="#" class="footer-link">Footer link</a></li>
+                  </ul>
+                </div>
+                <div class="col col-lg-3 col-md-6 col-xs-12">
+                  <ul role="list" class="u-mb-0 u-list-unstyled">
+                    <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                    <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                    <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                    <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                    <li class="u-mb-0"><a href="#" class="footer-link">Footer link</a></li>
+                  </ul>
+                </div>
+                <div class="col col-lg-3 col-md-6 col-xs-12">
+                  <ul role="list" class="u-mb-0 u-list-unstyled">
+                    <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                    <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                    <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                    <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                    <li class="u-mb-0"><a href="#" class="footer-link">Footer link</a></li>
+                  </ul>
+                </div>
+                <div class="col col-lg-3 col-md-6 col-xs-12">
+                  <ul role="list" class="u-mb-0 u-list-unstyled">
+                    <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                    <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                    <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                    <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                    <li class="u-mb-0"><a href="#" class="footer-link">Footer link</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="u-border u-mt-md u-mb-md"></div>
+          <div class="row row-justify-between">
+            <div class="col col-shrink">
+              <div>
+                ©
+                <span data-footer-year>2026</span>
+                Company
+              </div>
+            </div>
+            <div class="col col-shrink">
+              <ul role="list" class="footer-social_list u-list-unstyled">
+                <li class="u-mb-0">
+                  <a href="#" class="footer-social_link" aria-label="X">
+                    <span class="icon-color">
+                      <span class="icon cc-md" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                          <path
+                            d="M214.75,211.71l-62.6-98.38,61.77-67.95a8,8,0,0,0-11.84-10.76L143.24,99.34,102.75,35.71A8,8,0,0,0,96,32H48a8,8,0,0,0-6.75,12.3l62.6,98.37-61.77,68a8,8,0,1,0,11.84,10.76l58.84-64.72,40.49,63.63A8,8,0,0,0,160,224h48a8,8,0,0,0,6.75-12.29ZM164.39,208,62.57,48h29L193.43,208Z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                  </a>
+                </li>
+                <li class="u-mb-0">
+                  <a href="#" class="footer-social_link" aria-label="Instagram">
+                    <span class="icon-color">
+                      <span class="icon cc-md" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                          <path
+                            d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160ZM176,24H80A56.06,56.06,0,0,0,24,80v96a56.06,56.06,0,0,0,56,56h96a56.06,56.06,0,0,0,56-56V80A56.06,56.06,0,0,0,176,24Zm40,152a40,40,0,0,1-40,40H80a40,40,0,0,1-40-40V80A40,40,0,0,1,80,40h96a40,40,0,0,1,40,40ZM192,76a12,12,0,1,1-12-12A12,12,0,0,1,192,76Z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                  </a>
+                </li>
+                <li class="u-mb-0">
+                  <a href="#" class="footer-social_link" aria-label="LinkedIn">
+                    <span class="icon-color">
+                      <span class="icon cc-md" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                          <path
+                            d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24Zm0,192H40V40H216V216ZM96,112v64a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm88,28v36a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140ZM100,84A12,12,0,1,1,88,72,12,12,0,0,1,100,84Z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                  </a>
+                </li>
+                <li class="u-mb-0">
+                  <a href="#" class="footer-social_link" aria-label="YouTube">
+                    <span class="icon-color">
+                      <span class="icon cc-md" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                          <path
+                            d="M164.44,121.34l-48-32A8,8,0,0,0,104,96v64a8,8,0,0,0,12.44,6.66l48-32a8,8,0,0,0,0-13.32ZM120,145.05V111l25.58,17ZM234.33,69.52a24,24,0,0,0-14.49-16.4C185.56,39.88,131,40,128,40s-57.56-.12-91.84,13.12a24,24,0,0,0-14.49,16.4C19.08,79.5,16,97.74,16,128s3.08,48.5,5.67,58.48a24,24,0,0,0,14.49,16.41C69,215.56,120.4,216,127.34,216h1.32c6.94,0,58.37-.44,91.18-13.11a24,24,0,0,0,14.49-16.41c2.59-10,5.67-28.22,5.67-58.48S236.92,79.5,234.33,69.52Zm-15.49,113a8,8,0,0,1-4.77,5.49c-31.65,12.22-85.48,12-86,12H128c-.54,0-54.33.2-86-12a8,8,0,0,1-4.77-5.49C34.8,173.39,32,156.57,32,128s2.8-45.39,5.16-54.47A8,8,0,0,1,41.93,68c30.52-11.79,81.66-12,85.85-12h.27c.54,0,54.38-.18,86,12a8,8,0,0,1,4.77,5.49C221.2,82.61,224,99.43,224,128S221.2,173.39,218.84,182.47Z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="module" src="/js/main.js"></script>
+  </body>
+</html>

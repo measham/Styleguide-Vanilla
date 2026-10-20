@@ -1,0 +1,2436 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Components</title>
+    <script>
+      (function () {
+        var docEl = document.documentElement;
+        docEl.classList.add("js");
+        function applyMode(isLight) {
+          docEl.classList.toggle("u-mode-light", isLight);
+          docEl.classList.toggle("u-mode-dark", !isLight);
+        }
+        try {
+          var savedTheme = localStorage.getItem("savedTheme");
+          var osQuery = window.matchMedia("(prefers-color-scheme: dark)");
+          applyMode(savedTheme !== null ? savedTheme === "light" : !osQuery.matches);
+          if (savedTheme === null) {
+            osQuery.addEventListener("change", function (e) {
+              try {
+                if (localStorage.getItem("savedTheme") !== null) return;
+              } catch (err) {}
+              applyMode(!e.matches);
+            });
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="preload" href="/fonts/GeneralSans-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/GeneralSans-Medium.woff2" as="font" type="font/woff2" crossorigin />
+    <meta name="theme-color" content="white" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1d1c1a" media="(prefers-color-scheme: dark)" />
+    <meta property="og:site_name" content="Mast" />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48 32x32 16x16" />
+    <link rel="apple-touch-icon" href="/webclip.png" />
+    <meta property="og:title" content="Components" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Components" />
+    <meta
+      name="description"
+      content="Every Mast component, demonstrated: buttons, forms, cards, tabs, sliders, modals, and more."
+    />
+    <meta
+      property="og:description"
+      content="Every Mast component, demonstrated: buttons, forms, cards, tabs, sliders, modals, and more."
+    />
+    <meta
+      name="twitter:description"
+      content="Every Mast component, demonstrated: buttons, forms, cards, tabs, sliders, modals, and more."
+    />
+  </head>
+  <body>
+    <div class="page-wrapper u-minh-100vh">
+      <header class="styles__nav">
+        <a href="#main" class="nav-skip-link">Skip to Main Content</a>
+        <div class="container">
+          <div class="styles__nav-container">
+            <a href="https://nocodesupply.co/mast" target="_blank" rel="noopener" class="u-p-0">
+              <div class="u-d-flex cc-align-center">
+                <div class="styles__nav-logo">
+                  <svg viewbox="0 0 101 27" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mast">
+                    <path
+                      d="M11.9187 26.6316H16.4157L23.1435 9.59964V26.6316H28.03V1.2076H21.5855L14.1849 20.0454L6.81977 1.2076H0.375244V26.6316H5.26175V9.74128L11.9187 26.6316Z"
+                      fill="currentColor"
+                    ></path>
+                    <path
+                      d="M50.2224 26.6316H55.9941L46.5044 1.2076H40.6264L31.0658 26.6316H36.4835L38.431 21.1785H48.3102L50.2224 26.6316ZM43.4237 7.08557L46.823 16.894H39.9536L43.4237 7.08557Z"
+                      fill="currentColor"
+                    ></path>
+                    <path
+                      d="M77.9103 18.7353C77.9103 14.9819 75.5025 12.9281 71.0409 12.0429L66.6855 11.1577C64.8442 10.8036 63.2508 10.06 63.2508 8.3249C63.2508 6.55443 64.738 5.06723 67.3583 5.06723C70.0494 5.06723 71.8907 6.87312 72.0678 9.52883H77.5208C77.1667 4.21741 72.9884 0.888916 67.2875 0.888916C61.799 0.888916 57.7978 4.14659 57.7978 8.679C57.7978 12.8927 60.7722 14.9819 64.6318 15.7255L68.8101 16.5399C70.9701 16.9648 72.2094 17.9209 72.2094 19.5143C72.2094 21.568 70.2619 22.772 67.5354 22.772C64.2423 22.772 62.4364 20.9661 62.2948 18.1687H56.8417C57.2312 23.551 61.2325 26.9857 67.6416 26.9857C74.0153 26.9857 77.9103 23.5864 77.9103 18.7353Z"
+                      fill="currentColor"
+                    ></path>
+                    <path
+                      d="M92.4503 26.6316V6.0587H100.488V1.2076H79.0656V6.0587H87.0681V26.6316H92.4503Z"
+                      fill="currentColor"
+                    ></path>
+                  </svg>
+                </div>
+                <div class="styles__nav-version">v2.4</div>
+              </div>
+            </a>
+            <nav class="styles__nav-menu" aria-label="Style guide">
+              <a href="/" class="cc-divider styles__nav-link">Home</a>
+              <a href="#interactive" class="styles__nav-link">Interactive</a>
+              <a href="#content" class="styles__nav-link">Content</a>
+              <a href="#global" class="styles__nav-link">Global</a>
+              <a href="#build-mode" class="styles__nav-link">Build Mode</a>
+              <a href="#prevent-cleanup" class="styles__nav-link">Clean up</a>
+              <a href="https://nocodesupply.co/mast/docs" class="cc-cta styles__nav-link">Docs</a>
+            </nav>
+            <button type="button" class="styles__nav-btn" aria-label="Open menu" aria-expanded="false">
+              <span class="styles__nav-btn-icon">
+                <svg viewBox="0 0 30 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M25 6.83534H5V4.96289H25V6.83534Z"
+                    fill="currentColor"
+                  ></path>
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M25 17.0352H5V15.1641H25V17.0352Z"
+                    fill="currentColor"
+                  ></path>
+                </svg>
+              </span>
+            </button>
+          </div>
+        </div>
+      </header>
+      <main id="main" class="page-main">
+        <section id="interactive" class="section">
+          <div class="container">
+            <h1 class="u-mb-md">Components</h1>
+            <h2>Interactive</h2>
+            <h3 class="styles__section-label">Buttons</h3>
+            <div class="row">
+              <div class="col col-lg-4 col-md-6 col-sm-12">
+                <div class="styles__card">
+                  <div class="page-wrapper">
+                    <div class="styles__card-preview"><a href="#" class="button">Button</a></div>
+                  </div>
+                  <div class="card-body">
+                    <h4>Default</h4>
+                    <div class="styles__selector-callout">button</div>
+                    <div class="styles__selector-callout cc-component">Button</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-lg-4 col-md-6 col-sm-12">
+                <div class="styles__card">
+                  <div class="page-wrapper">
+                    <div class="styles__card-preview">
+                      <a href="#" class="button">
+                        Button
+                        <span class="btn-icon">
+                          <span class="icon-color">
+                            <span class="icon" aria-hidden="true">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                                <path
+                                  d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"
+                                />
+                              </svg>
+                            </span>
+                          </span>
+                        </span>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <h4>Default + Icon Right</h4>
+                    <div class="styles__selector-callout">button</div>
+                    <div class="styles__selector-callout cc-component">Button</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-lg-4 col-md-6 col-sm-12">
+                <div class="styles__card">
+                  <div class="page-wrapper">
+                    <div class="styles__card-preview">
+                      <a href="#" class="button">
+                        <span class="btn-icon">
+                          <span class="icon-color">
+                            <span class="icon" aria-hidden="true">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                                <path
+                                  d="M232.4,114.49,88.32,26.35a16,16,0,0,0-16.2-.3A15.86,15.86,0,0,0,64,39.87V216.13A15.94,15.94,0,0,0,80,232a16.07,16.07,0,0,0,8.36-2.35L232.4,141.51a15.81,15.81,0,0,0,0-27ZM80,215.94V40l143.83,88Z"
+                                />
+                              </svg>
+                            </span>
+                          </span>
+                        </span>
+                        Button
+                      </a>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <h4>Default + Icon Left</h4>
+                    <div class="styles__selector-callout">button</div>
+                    <div class="styles__selector-callout cc-component">Button</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-lg-4 col-md-6 col-sm-12">
+                <div class="styles__card">
+                  <div class="page-wrapper">
+                    <div class="styles__card-preview"><a href="#" class="button cc-secondary">Button</a></div>
+                  </div>
+                  <div class="card-body">
+                    <h4>Secondary</h4>
+                    <div class="styles__selector-callout">button</div>
+                    <div class="styles__selector-callout cc-component">Button</div>
+                    <div class="styles__selector-callout cc-component">Secondary</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-lg-4 col-md-6 col-sm-12">
+                <div class="styles__card">
+                  <div class="page-wrapper">
+                    <div class="styles__card-preview">
+                      <a href="#" class="button cc-secondary">
+                        Button
+                        <span class="btn-icon">
+                          <span class="icon-color">
+                            <span class="icon" aria-hidden="true">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                                <path
+                                  d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"
+                                />
+                              </svg>
+                            </span>
+                          </span>
+                        </span>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <h4>Secondary + Icon Right</h4>
+                    <div class="styles__selector-callout">button</div>
+                    <div class="styles__selector-callout cc-component">Button</div>
+                    <div class="styles__selector-callout cc-component">Secondary</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-lg-4 col-md-6 col-sm-12">
+                <div class="styles__card">
+                  <div class="page-wrapper">
+                    <div class="styles__card-preview">
+                      <a href="#" class="button cc-secondary">
+                        <span class="btn-icon">
+                          <span class="icon-color">
+                            <span class="icon" aria-hidden="true">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                                <path
+                                  d="M232.4,114.49,88.32,26.35a16,16,0,0,0-16.2-.3A15.86,15.86,0,0,0,64,39.87V216.13A15.94,15.94,0,0,0,80,232a16.07,16.07,0,0,0,8.36-2.35L232.4,141.51a15.81,15.81,0,0,0,0-27ZM80,215.94V40l143.83,88Z"
+                                />
+                              </svg>
+                            </span>
+                          </span>
+                        </span>
+                        Button
+                      </a>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <h4>Secondary + Icon Left</h4>
+                    <div class="styles__selector-callout">button</div>
+                    <div class="styles__selector-callout cc-component">Button</div>
+                    <div class="styles__selector-callout cc-component">Secondary</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-lg-4 col-md-6 col-sm-12">
+                <div class="styles__card">
+                  <div class="page-wrapper">
+                    <div class="styles__card-preview"><a href="#">Text</a></div>
+                  </div>
+                  <div class="card-body">
+                    <h4>Text Link</h4>
+                    <div class="styles__selector-callout cc-element">All Links</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h3 class="styles__section-label">Forms</h3>
+            <div class="row">
+              <div class="col col-lg-6 col-sm-12">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="u-mb-0">
+                      <form class="form" method="get">
+                        <div class="input-group">
+                          <label for="Name" class="input-label">Name*</label>
+                          <input
+                            id="Name"
+                            name="Name"
+                            type="text"
+                            maxlength="256"
+                            placeholder="e.g. John Doe"
+                            required
+                            class="input"
+                          />
+                        </div>
+                        <div class="input-group">
+                          <label for="Email" class="input-label">Email*</label>
+                          <input
+                            id="Email"
+                            name="Email"
+                            type="email"
+                            maxlength="256"
+                            placeholder="e.g. jdoe@email.com"
+                            required
+                            class="input"
+                          />
+                        </div>
+                        <div class="input-group">
+                          <label for="Select" class="input-label">Favorite Item</label>
+                          <select id="Select" name="Select" class="input cc-select">
+                            <option value="">Select one...</option>
+                            <option value="First">First Choice</option>
+                            <option value="Second">Second Choice</option>
+                            <option value="Third">Third Choice</option>
+                          </select>
+                        </div>
+                        <div class="input-group cc-textarea">
+                          <label for="Comment" class="input-label">Comment</label>
+                          <textarea
+                            id="Comment"
+                            name="Comment"
+                            maxlength="5000"
+                            placeholder="Leave us a message..."
+                            class="input"
+                          ></textarea>
+                        </div>
+                        <label class="input-group cc-toggle" for="radio-1">
+                          <input id="radio-1" type="radio" name="Radio-Group" value="Radio 1" class="input-radio" />
+                          <span class="input-label cc-static">Radio</span>
+                        </label>
+                        <label class="input-group cc-toggle" for="radio-2">
+                          <input id="radio-2" type="radio" name="Radio-Group" value="Radio 2" class="input-radio" />
+                          <span class="input-label cc-static">Radio</span>
+                        </label>
+                        <label class="input-group cc-toggle" for="checkbox-1">
+                          <input id="checkbox-1" type="checkbox" name="checkbox-1" class="input-check" />
+                          <span class="input-label cc-static">Checkbox</span>
+                        </label>
+                        <label class="input-group cc-toggle" for="checkbox-2">
+                          <input id="checkbox-2" type="checkbox" name="checkbox-2" class="input-check" />
+                          <span class="input-label cc-static">Checkbox</span>
+                        </label>
+                        <div class="form_required-note">*Required</div>
+                        <button class="button u-mt-sm" type="submit">Submit</button>
+                      </form>
+                      <div class="form-success">
+                        <div class="form-success_flex"><h3>Thank you for your submission!</h3></div>
+                      </div>
+                      <div class="form-error"><div>Oops! Something went wrong while submitting the form.</div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-lg-6 col-sm-12">
+                <div class="card u-mode-dark">
+                  <div class="card-body">
+                    <div class="u-mb-0">
+                      <form class="form" method="get">
+                        <div class="input-group">
+                          <label for="Name-2" class="input-label">Name*</label>
+                          <input
+                            id="Name-2"
+                            name="Name-2"
+                            type="text"
+                            maxlength="256"
+                            placeholder="e.g. John Doe"
+                            required
+                            class="input"
+                          />
+                        </div>
+                        <div class="input-group">
+                          <label for="Email-2" class="input-label">Email*</label>
+                          <input
+                            id="Email-2"
+                            name="Email-2"
+                            type="email"
+                            maxlength="256"
+                            placeholder="e.g. jdoe@email.com"
+                            required
+                            class="input"
+                          />
+                        </div>
+                        <div class="input-group">
+                          <label for="Select-2" class="input-label">Favorite Item</label>
+                          <select id="Select-2" name="Select-2" class="input cc-select">
+                            <option value="">Select one...</option>
+                            <option value="First">First Choice</option>
+                            <option value="Second">Second Choice</option>
+                            <option value="Third">Third Choice</option>
+                          </select>
+                        </div>
+                        <div class="input-group cc-textarea">
+                          <label for="Comment-2" class="input-label">Comment</label>
+                          <textarea
+                            id="Comment-2"
+                            name="Comment-2"
+                            maxlength="5000"
+                            placeholder="Leave us a message..."
+                            class="input"
+                          ></textarea>
+                        </div>
+                        <label class="input-group cc-toggle" for="radio-3">
+                          <input id="radio-3" type="radio" name="Radio-Group" value="Radio 3" class="input-radio" />
+                          <span class="input-label cc-static">Radio</span>
+                        </label>
+                        <label class="input-group cc-toggle" for="radio-4">
+                          <input id="radio-4" type="radio" name="Radio-Group" value="Radio 4" class="input-radio" />
+                          <span class="input-label cc-static">Radio</span>
+                        </label>
+                        <label class="input-group cc-toggle" for="checkbox-3">
+                          <input id="checkbox-3" type="checkbox" name="checkbox-3" class="input-check" />
+                          <span class="input-label cc-static">Checkbox</span>
+                        </label>
+                        <label class="input-group cc-toggle" for="checkbox-4">
+                          <input id="checkbox-4" type="checkbox" name="checkbox-4" class="input-check" />
+                          <span class="input-label cc-static">Checkbox</span>
+                        </label>
+                        <button class="button u-mt-sm" type="submit">Submit</button>
+                        <div class="form_required-note">*Required</div>
+                      </form>
+                      <div class="form-success">
+                        <div class="form-success_flex"><h3>Thank you for your submission!</h3></div>
+                      </div>
+                      <div class="form-error"><div>Oops! Something went wrong while submitting the form.</div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h3 id="accordion" class="styles__section-label">Accordion</h3>
+            <div class="content-wrap" role="list">
+              <details class="accordion-component u-mb-sm" open data-accordion-start-open="true" role="listitem">
+                <summary class="accordion-trigger">
+                  <div class="accordion-title"><h3 class="h4 u-mb-0">Lorem ipsum?</h3></div>
+                  <svg
+                    class="accordion-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="100%"
+                    viewBox="0 0 32 32"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M17 17L27.3137 17L27.3137 15H17V4.68631L15 4.68631L15 15H4.68629L4.68629 17L15 17V27.3137H17V17Z"
+                      fill="currentColor"
+                    ></path>
+                  </svg>
+                </summary>
+                <div data-accordion="content" class="accordion-content">
+                  <div class="accordion-content_spacer">
+                    <div class="rich-text">
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </details>
+              <details class="accordion-component u-mb-sm" role="listitem">
+                <summary class="accordion-trigger">
+                  <div class="accordion-title"><h3 class="h4 u-mb-0">Lorem ipsum?</h3></div>
+                  <svg
+                    class="accordion-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="100%"
+                    viewBox="0 0 32 32"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M17 17L27.3137 17L27.3137 15H17V4.68631L15 4.68631L15 15H4.68629L4.68629 17L15 17V27.3137H17V17Z"
+                      fill="currentColor"
+                    ></path>
+                  </svg>
+                </summary>
+                <div data-accordion="content" class="accordion-content">
+                  <div class="accordion-content_spacer">
+                    <div class="rich-text">
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </details>
+              <details class="accordion-component" role="listitem">
+                <summary class="accordion-trigger">
+                  <div class="accordion-title"><h3 class="h4 u-mb-0">Lorem ipsum?</h3></div>
+                  <svg
+                    class="accordion-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="100%"
+                    viewBox="0 0 32 32"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M17 17L27.3137 17L27.3137 15H17V4.68631L15 4.68631L15 15H4.68629L4.68629 17L15 17V27.3137H17V17Z"
+                      fill="currentColor"
+                    ></path>
+                  </svg>
+                </summary>
+                <div data-accordion="content" class="accordion-content">
+                  <div class="accordion-content_spacer">
+                    <div class="rich-text">
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </details>
+            </div>
+            <h3 id="modal" class="styles__section-label">Modal</h3>
+            <div class="modal-component">
+              <dialog class="modal">
+                <h3>This is a modal!</h3>
+                <div class="rich-text">
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat.
+                  </p>
+                </div>
+                <button type="button" class="modal_close-button" aria-label="Close modal">
+                  <svg
+                    class="modal_close-button_icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M13.4099 12L19.7099 5.71C19.8982 5.5217 20.004 5.2663 20.004 5C20.004 4.7337 19.8982 4.47831 19.7099 4.29C19.5216 4.1017 19.2662 3.99591 18.9999 3.99591C18.7336 3.99591 18.4782 4.1017 18.2899 4.29L11.9999 10.59L5.70994 4.29C5.52164 4.1017 5.26624 3.99591 4.99994 3.99591C4.73364 3.99591 4.47824 4.1017 4.28994 4.29C4.10164 4.47831 3.99585 4.7337 3.99585 5C3.99585 5.2663 4.10164 5.5217 4.28994 5.71L10.5899 12L4.28994 18.29C4.19621 18.383 4.12182 18.4936 4.07105 18.6154C4.02028 18.7373 3.99414 18.868 3.99414 19C3.99414 19.132 4.02028 19.2627 4.07105 19.3846C4.12182 19.5064 4.19621 19.617 4.28994 19.71C4.3829 19.8037 4.4935 19.8781 4.61536 19.9289C4.73722 19.9797 4.86793 20.0058 4.99994 20.0058C5.13195 20.0058 5.26266 19.9797 5.38452 19.9289C5.50638 19.8781 5.61698 19.8037 5.70994 19.71L11.9999 13.41L18.2899 19.71C18.3829 19.8037 18.4935 19.8781 18.6154 19.9289C18.7372 19.9797 18.8679 20.0058 18.9999 20.0058C19.132 20.0058 19.2627 19.9797 19.3845 19.9289C19.5064 19.8781 19.617 19.8037 19.7099 19.71C19.8037 19.617 19.8781 19.5064 19.9288 19.3846C19.9796 19.2627 20.0057 19.132 20.0057 19C20.0057 18.868 19.9796 18.7373 19.9288 18.6154C19.8781 18.4936 19.8037 18.383 19.7099 18.29L13.4099 12Z"
+                      fill="currentColor"
+                    ></path>
+                  </svg>
+                </button>
+              </dialog>
+              <button type="button" aria-haspopup="dialog" class="button">Open modal</button>
+            </div>
+            <h3 id="slider" class="styles__section-label">Slider</h3>
+            <h4 class="u-mb-sm">Slots based</h4>
+            <div data-slider="component" class="slider-component" style="--lg: 3; --md: 3; --sm: 2; --xs: 1">
+              <div style="--gap: var(--grid-gap-md)">
+                <div
+                  data-slider="slider"
+                  data-loop="false"
+                  data-autoplay="false"
+                  data-centered="false"
+                  data-effect="slide"
+                  data-speed="300"
+                  data-grab-cursor="true"
+                  data-slider-overflow="true"
+                  class="swiper"
+                >
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                      <div class="u-h-100">
+                        <div class="card u-h-100">
+                          <div class="card-body">
+                            <span class="icon-color cc-accent u-mb-sm">
+                              <span class="icon cc-lg" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                                  <path
+                                    d="M198.1,62.59a76,76,0,0,0-140.2,0A71.71,71.71,0,0,0,16,127.8C15.9,166,48,199,86.14,200A72.09,72.09,0,0,0,120,192.47V232a8,8,0,0,0,16,0V192.47A72.17,72.17,0,0,0,168,200l1.82,0C208,199,240.11,166,240,127.8A71.71,71.71,0,0,0,198.1,62.59ZM169.45,184a56.08,56.08,0,0,1-33.45-10v-41l43.58-21.78a8,8,0,1,0-7.16-14.32L136,115.06V88a8,8,0,0,0-16,0v51.06L83.58,120.84a8,8,0,1,0-7.16,14.32L120,156.94v17a56,56,0,0,1-33.45,10C56.9,183.23,31.92,157.52,32,127.84A55.77,55.77,0,0,1,67.11,76a8,8,0,0,0,4.53-4.67,60,60,0,0,1,112.72,0A8,8,0,0,0,188.89,76,55.79,55.79,0,0,1,224,127.84C224.08,157.52,199.1,183.23,169.45,184Z"
+                                  />
+                                </svg>
+                              </span>
+                            </span>
+                            <h5 class="h3">The steady center</h5>
+                            <div class="rich-text">
+                              <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore.
+                              </p>
+                            </div>
+                          </div>
+                          <a href="https://www.nocodesupply.co/mast" class="u-link-cover">
+                            <span class="u-sr-only">Learn more</span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="u-h-100">
+                        <div class="card u-h-100">
+                          <div class="card-body">
+                            <span class="icon-color cc-accent u-mb-sm">
+                              <span class="icon cc-lg" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                                  <path
+                                    d="M164,80a28,28,0,1,0-28-28A28,28,0,0,0,164,80Zm0-40a12,12,0,1,1-12,12A12,12,0,0,1,164,40Zm90.88,155.92-54.56-92.08A15.87,15.87,0,0,0,186.55,96h0a15.85,15.85,0,0,0-13.76,7.84L146.63,148l-44.84-76.1a16,16,0,0,0-27.58,0L1.11,195.94A8,8,0,0,0,8,208H248a8,8,0,0,0,6.88-12.08ZM88,80l23.57,40H64.43ZM22,192l33-56h66l18.74,31.8,0,0L154,192Zm150.57,0-16.66-28.28L186.55,112,234,192Z"
+                                  />
+                                </svg>
+                              </span>
+                            </span>
+                            <h5 class="h3">Signal through noise</h5>
+                            <div class="rich-text">
+                              <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore.
+                              </p>
+                            </div>
+                          </div>
+                          <a href="https://www.nocodesupply.co/mast" class="u-link-cover">
+                            <span class="u-sr-only">Learn more</span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="u-h-100">
+                        <div class="card u-h-100">
+                          <div class="card-body">
+                            <span class="icon-color cc-accent u-mb-sm">
+                              <span class="icon cc-lg" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                                  <path
+                                    d="M208,80a8,8,0,0,0-8,8v16H188.85L184,55.2A8,8,0,0,0,181.32,50L138.44,11.88l-.2-.17a16,16,0,0,0-20.48,0l-.2.17L74.68,50A8,8,0,0,0,72,55.2L67.15,104H56V88a8,8,0,0,0-16,0v24a8,8,0,0,0,8,8H65.54l-9.47,94.48A16,16,0,0,0,72,232H184a16,16,0,0,0,15.92-17.56L190.46,120H208a8,8,0,0,0,8-8V88A8,8,0,0,0,208,80ZM128,24l27,24H101ZM87.24,64h81.52l4,40H136V88a8,8,0,0,0-16,0v16H83.23ZM72,216l4-40H180l4,40Zm106.39-56H77.61l4-40h92.76Z"
+                                  />
+                                </svg>
+                              </span>
+                            </span>
+                            <h5 class="h3">Foundation beneath</h5>
+                            <div class="rich-text">
+                              <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore.
+                              </p>
+                            </div>
+                          </div>
+                          <a href="https://www.nocodesupply.co/mast" class="u-link-cover">
+                            <span class="u-sr-only">Learn more</span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="u-h-100">
+                        <div class="card u-h-100">
+                          <div class="card-body">
+                            <span class="icon-color cc-accent u-mb-sm">
+                              <span class="icon cc-lg" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                                  <path
+                                    d="M245.83,121.63a15.53,15.53,0,0,0-9.52-7.33,73.51,73.51,0,0,0-22.17-2.22c4-19.85,1-35.55-2.06-44.86a16.15,16.15,0,0,0-18.79-10.88,85.53,85.53,0,0,0-28.55,12.12,94.58,94.58,0,0,0-27.11-33.25,16.05,16.05,0,0,0-19.26,0A94.48,94.48,0,0,0,91.26,68.46,85.53,85.53,0,0,0,62.71,56.34,16.15,16.15,0,0,0,43.92,67.22c-3,9.31-6,25-2.06,44.86a73.51,73.51,0,0,0-22.17,2.22,15.53,15.53,0,0,0-9.52,7.33,16,16,0,0,0-1.6,12.27c3.39,12.57,13.8,36.48,45.33,55.32S113.13,208,128.05,208s42.67,0,74-18.78c31.53-18.84,41.94-42.75,45.33-55.32A16,16,0,0,0,245.83,121.63ZM59.14,72.14a.2.2,0,0,1,.23-.15A70.43,70.43,0,0,1,85.18,83.66,118.65,118.65,0,0,0,80,119.17c0,18.74,3.77,34,9.11,46.28A123.59,123.59,0,0,1,69.57,140C51.55,108.62,55.3,84,59.14,72.14Zm3,103.35C35.47,159.57,26.82,140.05,24,129.7a59.82,59.82,0,0,1,22.5-1.17,129.08,129.08,0,0,0,9.15,19.41,142.28,142.28,0,0,0,34,39.56A114.92,114.92,0,0,1,62.1,175.49ZM128,190.4c-9.33-6.94-32-28.23-32-71.23C96,76.7,118.38,55.24,128,48c9.62,7.26,32,28.72,32,71.19C160,162.17,137.33,183.46,128,190.4ZM170.82,83.66A70.43,70.43,0,0,1,196.63,72a.2.2,0,0,1,.23.15C200.7,84,204.45,108.62,186.43,140a123.32,123.32,0,0,1-19.54,25.48c5.34-12.26,9.11-27.54,9.11-46.28A118.65,118.65,0,0,0,170.82,83.66ZM232,129.72c-2.77,10.25-11.4,29.81-38.09,45.77a114.92,114.92,0,0,1-27.55,12,142.28,142.28,0,0,0,34-39.56,129.08,129.08,0,0,0,9.15-19.41A59.69,59.69,0,0,1,232,129.71Z"
+                                  />
+                                </svg>
+                              </span>
+                            </span>
+                            <h5 class="h3">Flow state</h5>
+                            <div class="rich-text">
+                              <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore.
+                              </p>
+                            </div>
+                          </div>
+                          <a href="https://www.nocodesupply.co/mast" class="u-link-cover">
+                            <span class="u-sr-only">Learn more</span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="u-h-100">
+                        <div class="card u-h-100">
+                          <div class="card-body">
+                            <span class="icon-color cc-accent u-mb-sm">
+                              <span class="icon cc-lg" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                                  <path
+                                    d="M235.92,199A8,8,0,0,1,225,195.92L155.32,72H136v8a8,8,0,0,1-16,0V72H100.68L31,195.92A8,8,0,0,1,17,188.08L82.32,72H24a8,8,0,0,1,0-16H232a8,8,0,0,1,0,16H173.68L239,188.08A8,8,0,0,1,235.92,199ZM128,112a8,8,0,0,0-8,8v16a8,8,0,0,0,16,0V120A8,8,0,0,0,128,112Zm0,56a8,8,0,0,0-8,8v16a8,8,0,0,0,16,0V176A8,8,0,0,0,128,168Z"
+                                  />
+                                </svg>
+                              </span>
+                            </span>
+                            <h5 class="h3">The long view</h5>
+                            <div class="rich-text">
+                              <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore.
+                              </p>
+                            </div>
+                          </div>
+                          <a href="https://www.nocodesupply.co/mast" class="u-link-cover">
+                            <span class="u-sr-only">Learn more</span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="slider-nav">
+                <button type="button" data-slider="previous" class="button">
+                  <span class="btn-text u-sr-only">Previous slide</span>
+                  <span class="btn-icon">
+                    <span class="icon-color">
+                      <span class="icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                          <path
+                            d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                  </span>
+                </button>
+                <div data-slider="pagination" class="slider-pagination"></div>
+                <button type="button" data-slider="next" class="button">
+                  <span class="btn-text u-sr-only">Next slide</span>
+                  <span class="btn-icon">
+                    <span class="icon-color">
+                      <span class="icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                          <path
+                            d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                  </span>
+                </button>
+              </div>
+            </div>
+            <div class="u-border cc-lg"></div>
+            <h4 class="u-mb-sm">Posts</h4>
+            <p class="u-mb-sm">These slides are the example posts, one slide each, written out in the page.</p>
+            <div data-slider="component" class="slider-component" style="--lg: 3; --md: 3; --sm: 2; --xs: 1">
+              <div style="--gap: var(--grid-gap-md)">
+                <div
+                  data-slider="slider"
+                  data-loop="false"
+                  data-autoplay="false"
+                  data-centered="false"
+                  data-effect="slide"
+                  data-speed="300"
+                  data-grab-cursor="false"
+                  data-slider-overflow="true"
+                  class="swiper"
+                >
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                      <div class="u-h-100">
+                        <div class="card cc-hover u-h-100">
+                          <div class="img-component">
+                            <img
+                              src="/images/post1.webp"
+                              alt="Stone steps winding down a coastal cliff"
+                              loading="lazy"
+                              class="u-img-cover"
+                              srcset="
+                                /images/post1-p-500.webp   500w,
+                                /images/post1-p-800.webp   800w,
+                                /images/post1-p-1080.webp 1080w,
+                                /images/post1-p-1600.webp 1600w,
+                                /images/post1.webp        2000w
+                              "
+                              sizes="(max-width: 47.9375rem) 100vw, 33vw"
+                            />
+                          </div>
+                          <div class="card-body">
+                            <h5 class="h4">The steady center</h5>
+                            <p class="u-mb-0">Why the calmest part of a system should also be the most load-bearing.</p>
+                          </div>
+                          <a href="#" class="u-link-cover"><span class="u-sr-only">The steady center</span></a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="u-h-100">
+                        <div class="card cc-hover u-h-100">
+                          <div class="img-component">
+                            <img
+                              src="/images/post2.webp"
+                              alt="A sailboat cutting through open water"
+                              loading="lazy"
+                              class="u-img-cover"
+                              srcset="
+                                /images/post2-p-500.webp   500w,
+                                /images/post2-p-800.webp   800w,
+                                /images/post2-p-1080.webp 1080w,
+                                /images/post2-p-1600.webp 1600w,
+                                /images/post2.webp        2000w
+                              "
+                              sizes="(max-width: 47.9375rem) 100vw, 33vw"
+                            />
+                          </div>
+                          <div class="card-body">
+                            <h5 class="h4">Signal through noise</h5>
+                            <p class="u-mb-0">Minimalism as a communication strategy, not an aesthetic.</p>
+                          </div>
+                          <a href="#" class="u-link-cover"><span class="u-sr-only">Signal through noise</span></a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="u-h-100">
+                        <div class="card cc-hover u-h-100">
+                          <div class="img-component">
+                            <img
+                              src="/images/post3.webp"
+                              alt="A lighthouse on a rocky headland"
+                              loading="lazy"
+                              class="u-img-cover"
+                              srcset="
+                                /images/post3-p-500.webp   500w,
+                                /images/post3-p-800.webp   800w,
+                                /images/post3-p-1080.webp 1080w,
+                                /images/post3-p-1600.webp 1600w,
+                                /images/post3.webp        2000w
+                              "
+                              sizes="(max-width: 47.9375rem) 100vw, 33vw"
+                            />
+                          </div>
+                          <div class="card-body">
+                            <h5 class="h4">Foundation beneath</h5>
+                            <p class="u-mb-0">Letting the platform do the heavy lifting.</p>
+                          </div>
+                          <a href="#" class="u-link-cover"><span class="u-sr-only">Foundation beneath</span></a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="u-h-100">
+                        <div class="card cc-hover u-h-100">
+                          <div class="img-component">
+                            <img
+                              src="/images/post4.webp"
+                              alt="A coastal road stretching toward the horizon"
+                              loading="lazy"
+                              class="u-img-cover"
+                              srcset="
+                                /images/post4-p-500.webp   500w,
+                                /images/post4-p-800.webp   800w,
+                                /images/post4-p-1080.webp 1080w,
+                                /images/post4-p-1600.webp 1600w,
+                                /images/post4.webp        2000w
+                              "
+                              sizes="(max-width: 47.9375rem) 100vw, 33vw"
+                            />
+                          </div>
+                          <div class="card-body">
+                            <h5 class="h4">The long view</h5>
+                            <p class="u-mb-0">Scaling naturally means deciding less, later.</p>
+                          </div>
+                          <a href="#" class="u-link-cover"><span class="u-sr-only">The long view</span></a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="u-h-100">
+                        <div class="card cc-hover u-h-100">
+                          <div class="img-component">
+                            <img
+                              src="/images/post5.webp"
+                              alt="Terraced cliffs meeting a bright sea"
+                              loading="lazy"
+                              class="u-img-cover"
+                              srcset="
+                                /images/post5-p-500.webp   500w,
+                                /images/post5-p-800.webp   800w,
+                                /images/post5-p-1080.webp 1080w,
+                                /images/post5-p-1600.webp 1600w,
+                                /images/post5.webp        2000w
+                              "
+                              sizes="(max-width: 47.9375rem) 100vw, 33vw"
+                            />
+                          </div>
+                          <div class="card-body">
+                            <h5 class="h4">Clarity in craft</h5>
+                            <p class="u-mb-0">What you ship should read like what you wrote.</p>
+                          </div>
+                          <a href="#" class="u-link-cover"><span class="u-sr-only">Clarity in craft</span></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="slider-nav">
+                <button type="button" data-slider="previous" class="button">
+                  <span class="btn-text u-sr-only">Previous slide</span>
+                  <span class="btn-icon">
+                    <span class="icon-color">
+                      <span class="icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                          <path
+                            d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                  </span>
+                </button>
+                <div data-slider="pagination" class="slider-pagination"></div>
+                <button type="button" data-slider="next" class="button">
+                  <span class="btn-text u-sr-only">Next slide</span>
+                  <span class="btn-icon">
+                    <span class="icon-color">
+                      <span class="icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                          <path
+                            d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                  </span>
+                </button>
+              </div>
+            </div>
+            <h3 id="inline-video" class="styles__section-label">Inline video</h3>
+            <div class="row">
+              <div class="col col-lg-8 col-md-12">
+                <div class="card">
+                  <div data-video="component" class="inline-video-component" style="aspect-ratio: 16 / 9">
+                    <img
+                      alt=""
+                      loading="lazy"
+                      src="/images/whatsmast-clip-poster.webp"
+                      srcset="
+                        /images/whatsmast-clip-poster-p-500.webp  500w,
+                        /images/whatsmast-clip-poster-p-800.webp  800w,
+                        /images/whatsmast-clip-poster.webp       1150w
+                      "
+                      sizes="(max-width: 1150px) 100vw, 1150px"
+                      class="inline-video_poster"
+                    />
+                    <video
+                      muted
+                      loop
+                      playsinline
+                      preload="none"
+                      data-video-desktop-only="false"
+                      data-video-scroll-in-play="true"
+                      data-video-hover="false"
+                      data-video="video"
+                      class="inline-video_video"
+                    >
+                      <source
+                        data-src="https://cdn.prod.website-files.com/62fa4f08068b2b9c3fab8161%2F68e817950d0a508e8a165a71_whatsmast-clip-transcode.mp4"
+                        type="video/mp4"
+                      />
+                    </video>
+                    <div data-video-playback="wrapper" class="inline-video_playback">
+                      <button
+                        type="button"
+                        data-video-playback="button"
+                        aria-label="Play video"
+                        class="inline-video_playback-button"
+                      >
+                        <span data-video-playback="pause" class="inline-video_playback-pause">
+                          <span class="icon-color u-mb-0">
+                            <span class="icon" aria-hidden="true">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                                <path
+                                  d="M200,32H160a16,16,0,0,0-16,16V208a16,16,0,0,0,16,16h40a16,16,0,0,0,16-16V48A16,16,0,0,0,200,32Zm0,176H160V48h40ZM96,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V48A16,16,0,0,0,96,32Zm0,176H56V48H96Z"
+                                />
+                              </svg>
+                            </span>
+                          </span>
+                        </span>
+                        <span data-video-playback="play" class="inline-video_playback-play">
+                          <span class="icon-color u-mb-0">
+                            <span class="icon" aria-hidden="true">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                                <path
+                                  d="M232.4,114.49,88.32,26.35a16,16,0,0,0-16.2-.3A15.86,15.86,0,0,0,64,39.87V216.13A15.94,15.94,0,0,0,80,232a16.07,16.07,0,0,0,8.36-2.35L232.4,141.51a15.81,15.81,0,0,0,0-27ZM80,215.94V40l143.83,88Z"
+                                />
+                              </svg>
+                            </span>
+                          </span>
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h3 id="marquee" class="styles__section-label">Marquee</h3>
+            <div class="u-mb-lg">
+              <div
+                class="marquee-component"
+                data-marquee-reverse="false"
+                data-marquee-pause-on-hover="true"
+                data-marquee-fade-edges="false"
+              >
+                <div class="marquee-wrapper" style="--marquee-duration: 30s">
+                  <div class="marquee-content" style="--marquee-gap: 30px">
+                    <div class="marquee-group">
+                      <div class="card" style="min-width: 14rem">
+                        <div class="card-body"><h4>Item 1</h4></div>
+                      </div>
+                      <div class="card" style="min-width: 14rem">
+                        <div class="card-body"><h4>Item 2</h4></div>
+                      </div>
+                      <div class="card" style="min-width: 14rem">
+                        <div class="card-body"><h4>Item 3</h4></div>
+                      </div>
+                      <div class="card" style="min-width: 14rem">
+                        <div class="card-body"><h4>Item 4</h4></div>
+                      </div>
+                      <div class="card" style="min-width: 14rem">
+                        <div class="card-body"><h4>Item 5</h4></div>
+                      </div>
+                      <div class="card" style="min-width: 14rem">
+                        <div class="card-body"><h4>Item 6</h4></div>
+                      </div>
+                      <div class="card" style="min-width: 14rem">
+                        <div class="card-body"><h4>Item 7</h4></div>
+                      </div>
+                    </div>
+                    <div class="marquee-group" aria-hidden="true" inert>
+                      <div class="card" style="min-width: 14rem">
+                        <div class="card-body"><h4>Item 1</h4></div>
+                      </div>
+                      <div class="card" style="min-width: 14rem">
+                        <div class="card-body"><h4>Item 2</h4></div>
+                      </div>
+                      <div class="card" style="min-width: 14rem">
+                        <div class="card-body"><h4>Item 3</h4></div>
+                      </div>
+                      <div class="card" style="min-width: 14rem">
+                        <div class="card-body"><h4>Item 4</h4></div>
+                      </div>
+                      <div class="card" style="min-width: 14rem">
+                        <div class="card-body"><h4>Item 5</h4></div>
+                      </div>
+                      <div class="card" style="min-width: 14rem">
+                        <div class="card-body"><h4>Item 6</h4></div>
+                      </div>
+                      <div class="card" style="min-width: 14rem">
+                        <div class="card-body"><h4>Item 7</h4></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col col-lg-6 col-sm-12">
+                <div class="card">
+                  <div class="card-body">
+                    <div
+                      class="marquee-component"
+                      style="height: 20rem"
+                      data-marquee-reverse="true"
+                      data-marquee-pause-on-hover="false"
+                      data-marquee-fade-edges="true"
+                    >
+                      <div class="marquee-wrapper" style="--marquee-duration: 30s">
+                        <div class="marquee-content" style="--marquee-gap: 30px">
+                          <div class="marquee-group">
+                            <div class="card" style="min-width: 14rem">
+                              <div class="card-body"><h4>Item 1</h4></div>
+                            </div>
+                            <div class="card" style="min-width: 14rem">
+                              <div class="card-body"><h4>Item 2</h4></div>
+                            </div>
+                            <div class="card" style="min-width: 14rem">
+                              <div class="card-body"><h4>Item 3</h4></div>
+                            </div>
+                            <div class="card" style="min-width: 14rem">
+                              <div class="card-body"><h4>Item 4</h4></div>
+                            </div>
+                            <div class="card" style="min-width: 14rem">
+                              <div class="card-body"><h4>Item 5</h4></div>
+                            </div>
+                            <div class="card" style="min-width: 14rem">
+                              <div class="card-body"><h4>Item 6</h4></div>
+                            </div>
+                          </div>
+                          <div class="marquee-group" aria-hidden="true">
+                            <div class="card" style="min-width: 14rem">
+                              <div class="card-body"><h4>Item 1</h4></div>
+                            </div>
+                            <div class="card" style="min-width: 14rem">
+                              <div class="card-body"><h4>Item 2</h4></div>
+                            </div>
+                            <div class="card" style="min-width: 14rem">
+                              <div class="card-body"><h4>Item 3</h4></div>
+                            </div>
+                            <div class="card" style="min-width: 14rem">
+                              <div class="card-body"><h4>Item 4</h4></div>
+                            </div>
+                            <div class="card" style="min-width: 14rem">
+                              <div class="card-body"><h4>Item 5</h4></div>
+                            </div>
+                            <div class="card" style="min-width: 14rem">
+                              <div class="card-body"><h4>Item 6</h4></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col col-lg-6 col-sm-12">
+                <div class="card">
+                  <div class="card-body">
+                    <div
+                      class="marquee-component cc-vertical"
+                      style="height: 20rem"
+                      data-marquee-reverse="true"
+                      data-marquee-pause-on-hover="false"
+                      data-marquee-fade-edges="true"
+                    >
+                      <div class="marquee-wrapper" style="--marquee-duration: 30s">
+                        <div class="marquee-content" style="--marquee-gap: 30px">
+                          <div class="marquee-group">
+                            <div class="card" style="min-width: 14rem">
+                              <div class="card-body"><h4>Item 1</h4></div>
+                            </div>
+                            <div class="card" style="min-width: 14rem">
+                              <div class="card-body"><h4>Item 2</h4></div>
+                            </div>
+                            <div class="card" style="min-width: 14rem">
+                              <div class="card-body"><h4>Item 3</h4></div>
+                            </div>
+                            <div class="card" style="min-width: 14rem">
+                              <div class="card-body"><h4>Item 4</h4></div>
+                            </div>
+                            <div class="card" style="min-width: 14rem">
+                              <div class="card-body"><h4>Item 5</h4></div>
+                            </div>
+                            <div class="card" style="min-width: 14rem">
+                              <div class="card-body"><h4>Item 6</h4></div>
+                            </div>
+                          </div>
+                          <div class="marquee-group" aria-hidden="true">
+                            <div class="card" style="min-width: 14rem">
+                              <div class="card-body"><h4>Item 1</h4></div>
+                            </div>
+                            <div class="card" style="min-width: 14rem">
+                              <div class="card-body"><h4>Item 2</h4></div>
+                            </div>
+                            <div class="card" style="min-width: 14rem">
+                              <div class="card-body"><h4>Item 3</h4></div>
+                            </div>
+                            <div class="card" style="min-width: 14rem">
+                              <div class="card-body"><h4>Item 4</h4></div>
+                            </div>
+                            <div class="card" style="min-width: 14rem">
+                              <div class="card-body"><h4>Item 5</h4></div>
+                            </div>
+                            <div class="card" style="min-width: 14rem">
+                              <div class="card-body"><h4>Item 6</h4></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h3 id="tabs" class="styles__section-label">Tabs</h3>
+            <h4 class="u-mb-sm">Example 1</h4>
+            <div data-tabs-component class="tabs-component">
+              <div class="row">
+                <div class="col col-lg-12">
+                  <div
+                    class="tabs-menu"
+                    data-tabs-menu
+                    data-tab-mobile-dropdown="true"
+                    data-tabs-autoplay="true"
+                    data-tabs-autoplay-duration="5"
+                    data-tabs-autoplay-hover-pause="false"
+                  >
+                    <button data-tabs-menu-dropdown-toggle class="tabs-menu_dropdown-toggle" type="button">
+                      <span data-tabs-menu-dropdown-text class="tabs-menu_dropdown-text">Tabs</span>
+                      <span class="tabs-menu_dropdown-arrow">
+                        <span class="icon-color u-mb-0">
+                          <span class="icon" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                              <path
+                                d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                      </span>
+                    </button>
+                    <div data-tabs-menu-dropdown-menu class="tabs-menu_dropdown-menu">
+                      <div role="tablist" data-tabs-menu-wrapper class="tabs-menu_list">
+                        <div data-tab-link-name="Tab 1" data-tabs-link class="tabs-link cc-active">
+                          <div>Tab 1</div>
+                          <button
+                            type="button"
+                            role="tab"
+                            aria-selected="true"
+                            aria-label="Tab 1"
+                            tabindex="0"
+                            data-tabs-link-button
+                            class="u-link-cover cc-tabs-link"
+                          ></button>
+                          <div data-tabs-autoplay-progress class="tabs-autoplay-progress"></div>
+                        </div>
+                        <div data-tab-link-name="Tab 2" data-tabs-link class="tabs-link">
+                          <div>Tab 2</div>
+                          <button
+                            type="button"
+                            role="tab"
+                            aria-selected="false"
+                            aria-label="Tab 2"
+                            tabindex="-1"
+                            data-tabs-link-button
+                            class="u-link-cover cc-tabs-link"
+                          ></button>
+                          <div data-tabs-autoplay-progress class="tabs-autoplay-progress"></div>
+                        </div>
+                        <div data-tab-link-name="Tab 3" data-tabs-link class="tabs-link">
+                          <div>Tab 3</div>
+                          <button
+                            type="button"
+                            role="tab"
+                            aria-selected="false"
+                            aria-label="Tab 3"
+                            tabindex="-1"
+                            data-tabs-link-button
+                            class="u-link-cover cc-tabs-link"
+                          ></button>
+                          <div data-tabs-autoplay-progress class="tabs-autoplay-progress"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col col-lg-12">
+                  <div role="tabpanel" data-tabs-pane class="tabs-pane">
+                    <h5 class="h3">Tab 1</h5>
+                    <div class="rich-text">
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat.
+                      </p>
+                    </div>
+                  </div>
+                  <div role="tabpanel" data-tabs-pane class="tabs-pane">
+                    <h5 class="h3">Tab 2</h5>
+                    <div class="rich-text">
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat.
+                      </p>
+                    </div>
+                  </div>
+                  <div role="tabpanel" data-tabs-pane class="tabs-pane">
+                    <h5 class="h3">Tab 3</h5>
+                    <div class="rich-text">
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="spacer-component"></div>
+              <button data-tabs-autoplay-toggle class="tabs-autoplay-toggle" type="button" aria-label="Pause autoplay">
+                <span class="tabs-autoplay-toggle_pause">
+                  <span class="icon-color u-mb-0">
+                    <span class="icon" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                        <path
+                          d="M200,32H160a16,16,0,0,0-16,16V208a16,16,0,0,0,16,16h40a16,16,0,0,0,16-16V48A16,16,0,0,0,200,32Zm0,176H160V48h40ZM96,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V48A16,16,0,0,0,96,32Zm0,176H56V48H96Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
+                <span class="tabs-autoplay-toggle_play">
+                  <span class="icon-color u-mb-0">
+                    <span class="icon" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                        <path
+                          d="M232.4,114.49,88.32,26.35a16,16,0,0,0-16.2-.3A15.86,15.86,0,0,0,64,39.87V216.13A15.94,15.94,0,0,0,80,232a16.07,16.07,0,0,0,8.36-2.35L232.4,141.51a15.81,15.81,0,0,0,0-27ZM80,215.94V40l143.83,88Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
+              </button>
+            </div>
+            <div class="u-border cc-lg"></div>
+            <h4 class="u-mb-sm">Example 2</h4>
+            <div data-tabs-component class="tabs-component">
+              <div class="row">
+                <div class="col col-lg-3 col-md-12">
+                  <div
+                    class="tabs-menu cc-vertical"
+                    data-tabs-menu
+                    data-tab-mobile-dropdown="false"
+                    data-tabs-autoplay="true"
+                    data-tabs-autoplay-duration="5"
+                    data-tabs-autoplay-hover-pause="true"
+                  >
+                    <button data-tabs-menu-dropdown-toggle class="tabs-menu_dropdown-toggle" type="button">
+                      <span data-tabs-menu-dropdown-text class="tabs-menu_dropdown-text">Tabs</span>
+                      <span class="tabs-menu_dropdown-arrow">
+                        <span class="icon-color u-mb-0">
+                          <span class="icon" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                              <path
+                                d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                      </span>
+                    </button>
+                    <div data-tabs-menu-dropdown-menu class="tabs-menu_dropdown-menu">
+                      <div role="tablist" aria-orientation="vertical" data-tabs-menu-wrapper class="tabs-menu_list">
+                        <div data-tab-link-name="Tab 1" data-tabs-link class="tabs-link cc-active">
+                          <div>Tab 1</div>
+                          <button
+                            type="button"
+                            role="tab"
+                            aria-selected="true"
+                            aria-label="Tab 1"
+                            tabindex="0"
+                            data-tabs-link-button
+                            class="u-link-cover cc-tabs-link"
+                          ></button>
+                          <div data-tabs-autoplay-progress class="tabs-autoplay-progress"></div>
+                        </div>
+                        <div data-tab-link-name="Tab 2" data-tabs-link class="tabs-link">
+                          <div>Tab 2</div>
+                          <button
+                            type="button"
+                            role="tab"
+                            aria-selected="false"
+                            aria-label="Tab 2"
+                            tabindex="-1"
+                            data-tabs-link-button
+                            class="u-link-cover cc-tabs-link"
+                          ></button>
+                          <div data-tabs-autoplay-progress class="tabs-autoplay-progress"></div>
+                        </div>
+                        <div data-tab-link-name="Tab 3" data-tabs-link class="tabs-link">
+                          <div>Tab 3</div>
+                          <button
+                            type="button"
+                            role="tab"
+                            aria-selected="false"
+                            aria-label="Tab 3"
+                            tabindex="-1"
+                            data-tabs-link-button
+                            class="u-link-cover cc-tabs-link"
+                          ></button>
+                          <div data-tabs-autoplay-progress class="tabs-autoplay-progress"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col col-lg-9 col-md-12">
+                  <div role="tabpanel" data-tabs-pane class="tabs-pane">
+                    <h5 class="h3">Tab 1</h5>
+                    <div class="rich-text">
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat.
+                      </p>
+                    </div>
+                  </div>
+                  <div role="tabpanel" data-tabs-pane class="tabs-pane">
+                    <h5 class="h3">Tab 2</h5>
+                    <div class="rich-text">
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat.
+                      </p>
+                    </div>
+                  </div>
+                  <div role="tabpanel" data-tabs-pane class="tabs-pane">
+                    <h5 class="h3">Tab 3</h5>
+                    <div class="rich-text">
+                      <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="spacer-component"></div>
+              <button data-tabs-autoplay-toggle class="tabs-autoplay-toggle" type="button" aria-label="Pause autoplay">
+                <span class="tabs-autoplay-toggle_pause">
+                  <span class="icon-color u-mb-0">
+                    <span class="icon" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                        <path
+                          d="M200,32H160a16,16,0,0,0-16,16V208a16,16,0,0,0,16,16h40a16,16,0,0,0,16-16V48A16,16,0,0,0,200,32Zm0,176H160V48h40ZM96,32H56A16,16,0,0,0,40,48V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V48A16,16,0,0,0,96,32Zm0,176H56V48H96Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
+                <span class="tabs-autoplay-toggle_play">
+                  <span class="icon-color u-mb-0">
+                    <span class="icon" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                        <path
+                          d="M232.4,114.49,88.32,26.35a16,16,0,0,0-16.2-.3A15.86,15.86,0,0,0,64,39.87V216.13A15.94,15.94,0,0,0,80,232a16.07,16.07,0,0,0,8.36-2.35L232.4,141.51a15.81,15.81,0,0,0,0-27ZM80,215.94V40l143.83,88Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
+              </button>
+            </div>
+            <div class="u-border cc-lg"></div>
+            <div>
+              <h4>Tab link preview</h4>
+              <p class="u-mb-md">
+                Use the following preview of the inactive and active tab link state for easier styling.
+              </p>
+              <div class="row">
+                <div class="col col-lg-4 col-md-6 col-sm-12">
+                  <div class="styles__card">
+                    <div class="page-wrapper">
+                      <div class="styles__card-preview">
+                        <div>
+                          <div class="tabs-link"><div>Inactive Tab Link</div></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <h4>Tab Link / Inactive</h4>
+                      <div class="styles__selector-callout">tabs-link</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col col-lg-4 col-md-6 col-sm-12">
+                  <div class="styles__card">
+                    <div class="page-wrapper">
+                      <div class="styles__card-preview">
+                        <div>
+                          <div class="tabs-link cc-active"><div>Active Tab Link</div></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <h4>Tab Link / Active</h4>
+                      <div class="styles__selector-callout">tabs-link</div>
+                      <div class="styles__selector-callout">cc-active</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div class="u-border cc-0"></div>
+        <section id="content" class="section">
+          <div class="container">
+            <h2 class="u-mb-sm">Content</h2>
+            <div>
+              <h3 class="styles__section-label">Breadcrumb</h3>
+              <nav class="breadcrumb-nav">
+                <ol
+                  itemtype="https://schema.org/BreadcrumbList"
+                  itemscope
+                  role="list"
+                  class="breadcrumb-list u-list-unstyled"
+                >
+                  <li
+                    itemprop="itemListElement"
+                    itemscope
+                    itemtype="https://schema.org/ListItem"
+                    class="breadcrumb-item"
+                  >
+                    <a itemprop="item" href="#" class="eyebrow cc-breadcrumb"><div itemprop="name">Home</div></a>
+                    <meta itemprop="position" content="1" />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="100%"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      class="breadcrumb-arrow"
+                    >
+                      <path
+                        d="M9.29297 7.707L13.586 12L9.29297 16.293L10.707 17.707L16.414 12L10.707 6.293L9.29297 7.707Z"
+                        fill="currentColor"
+                      ></path>
+                    </svg>
+                  </li>
+                  <li
+                    itemprop="itemListElement"
+                    itemscope
+                    itemtype="https://schema.org/ListItem"
+                    class="breadcrumb-item"
+                  >
+                    <a itemprop="item" href="#" class="eyebrow cc-breadcrumb"><div itemprop="name">2nd Level</div></a>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="100%"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      class="breadcrumb-arrow"
+                    >
+                      <path
+                        d="M9.29297 7.707L13.586 12L9.29297 16.293L10.707 17.707L16.414 12L10.707 6.293L9.29297 7.707Z"
+                        fill="currentColor"
+                      ></path>
+                    </svg>
+                    <meta itemprop="position" content="2" />
+                  </li>
+                  <li
+                    itemprop="itemListElement"
+                    itemscope
+                    itemtype="https://schema.org/ListItem"
+                    class="breadcrumb-item"
+                  >
+                    <a itemprop="item" href="#" class="eyebrow cc-breadcrumb"><div itemprop="name">3rd Level</div></a>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="100%"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      class="breadcrumb-arrow"
+                    >
+                      <path
+                        d="M9.29297 7.707L13.586 12L9.29297 16.293L10.707 17.707L16.414 12L10.707 6.293L9.29297 7.707Z"
+                        fill="currentColor"
+                      ></path>
+                    </svg>
+                    <meta itemprop="position" content="3" />
+                  </li>
+                  <li
+                    itemprop="itemListElement"
+                    itemscope
+                    itemtype="https://schema.org/ListItem"
+                    class="breadcrumb-item"
+                  >
+                    <div itemprop="name" class="eyebrow cc-breadcrumb cc-current-page">Current page</div>
+                    <meta itemprop="position" content="4" />
+                  </li>
+                </ol>
+              </nav>
+            </div>
+            <div>
+              <h3 class="styles__section-label">Icon</h3>
+              <div class="row">
+                <div class="col col-lg-3 col-md-6 col-sm-12">
+                  <div class="styles__card">
+                    <div class="page-wrapper">
+                      <div class="styles__card-preview">
+                        <div class="icon-component">
+                          <span class="icon-color u-mb-sm">
+                            <span class="icon" aria-hidden="true">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                                <path
+                                  d="M223.68,66.15,135.68,18h0a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,32h0l80.34,44L128,120,47.66,76ZM40,90l80,43.78v85.79L40,175.82Zm96,129.57V133.82L216,90v85.78Z"
+                                />
+                              </svg>
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <h4>1 EM</h4>
+                      <div class="styles__selector-callout">icon</div>
+                      <div class="styles__selector-callout cc-component">Icon</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col col-lg-3 col-md-6 col-sm-12">
+                  <div class="styles__card">
+                    <div class="page-wrapper">
+                      <div class="styles__card-preview">
+                        <div class="icon-component">
+                          <span class="icon-color cc-accent u-mb-sm">
+                            <span class="icon cc-md" aria-hidden="true">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                                <path
+                                  d="M223.68,66.15,135.68,18h0a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,32h0l80.34,44L128,120,47.66,76ZM40,90l80,43.78v85.79L40,175.82Zm96,129.57V133.82L216,90v85.78Z"
+                                />
+                              </svg>
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <h4>Medium</h4>
+                      <div class="styles__selector-callout">icon cc-md</div>
+                      <div class="styles__selector-callout cc-component">Icon</div>
+                      <div class="styles__selector-callout cc-component">MD</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col col-lg-3 col-md-6 col-sm-12">
+                  <div class="styles__card">
+                    <div class="page-wrapper">
+                      <div class="styles__card-preview">
+                        <div class="icon-component">
+                          <span class="icon-color cc-yellow u-mb-sm">
+                            <span class="icon cc-lg" aria-hidden="true">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                                <path
+                                  d="M223.68,66.15,135.68,18h0a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,32h0l80.34,44L128,120,47.66,76ZM40,90l80,43.78v85.79L40,175.82Zm96,129.57V133.82L216,90v85.78Z"
+                                />
+                              </svg>
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <h4>Large</h4>
+                      <div class="styles__selector-callout">icon cc-lg</div>
+                      <div class="styles__selector-callout cc-component">Icon</div>
+                      <div class="styles__selector-callout cc-component">LG</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col col-lg-3 col-md-6 col-sm-12">
+                  <div class="styles__card">
+                    <div class="page-wrapper">
+                      <div class="styles__card-preview">
+                        <div class="icon-component">
+                          <span class="icon-color cc-blue u-mb-sm">
+                            <span class="icon cc-xl" aria-hidden="true">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                                <path
+                                  d="M223.68,66.15,135.68,18h0a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,32h0l80.34,44L128,120,47.66,76ZM40,90l80,43.78v85.79L40,175.82Zm96,129.57V133.82L216,90v85.78Z"
+                                />
+                              </svg>
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <h4>XL</h4>
+                      <div class="styles__selector-callout">icon cc-xl</div>
+                      <div class="styles__selector-callout cc-component">Icon</div>
+                      <div class="styles__selector-callout cc-component">XL</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h3 class="styles__section-label">Image</h3>
+              <div class="row">
+                <div class="col col-lg-3 col-md-6 col-sm-12">
+                  <div class="styles__card">
+                    <div class="page-wrapper">
+                      <div class="styles__card-preview">
+                        <div class="card-body">
+                          <div class="img-component cc-auto" style="aspect-ratio: 800 / 1200">
+                            <img
+                              class="u-img-cover cc-top-left"
+                              src="/images/post6.webp"
+                              alt=""
+                              sizes="(max-width: 800px) 100vw, 800px"
+                              loading="lazy"
+                              srcset="
+                                /images/post6-p-500.webp   500w,
+                                /images/post6-p-800.webp   800w,
+                                /images/post6-p-1080.webp 1080w,
+                                /images/post6-p-1600.webp 1600w,
+                                /images/post6.webp        2000w
+                              "
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <h4>Inherit</h4>
+                      <div class="styles__selector-callout cc-component">Image</div>
+                      <div class="styles__selector-callout cc-component">Inherit</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col col-lg-3 col-md-6 col-sm-12">
+                  <div class="styles__card">
+                    <div class="page-wrapper">
+                      <div class="styles__card-preview">
+                        <div class="card-body">
+                          <div class="img-component cc-16x9">
+                            <img
+                              src="/images/post6.webp"
+                              alt=""
+                              loading="lazy"
+                              class="u-img-cover cc-top-left"
+                              sizes="(max-width: 800px) 100vw, 800px"
+                              srcset="
+                                /images/post6-p-500.webp   500w,
+                                /images/post6-p-800.webp   800w,
+                                /images/post6-p-1080.webp 1080w,
+                                /images/post6-p-1600.webp 1600w,
+                                /images/post6.webp        2000w
+                              "
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <h4>16x9</h4>
+                      <div class="styles__selector-callout cc-component">Image</div>
+                      <div class="styles__selector-callout cc-component">16x9</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col col-lg-3 col-md-6 col-sm-12">
+                  <div class="styles__card">
+                    <div class="page-wrapper">
+                      <div class="styles__card-preview">
+                        <div class="card-body">
+                          <div class="img-component">
+                            <img
+                              src="/images/post6.webp"
+                              alt=""
+                              loading="lazy"
+                              class="u-img-cover cc-top-left"
+                              sizes="(max-width: 800px) 100vw, 800px"
+                              srcset="
+                                /images/post6-p-500.webp   500w,
+                                /images/post6-p-800.webp   800w,
+                                /images/post6-p-1080.webp 1080w,
+                                /images/post6-p-1600.webp 1600w,
+                                /images/post6.webp        2000w
+                              "
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <h4>4x3</h4>
+                      <div class="styles__selector-callout cc-component">Image</div>
+                      <div class="styles__selector-callout cc-component">4x3</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col col-lg-3 col-md-6 col-sm-12">
+                  <div class="styles__card">
+                    <div class="page-wrapper">
+                      <div class="styles__card-preview">
+                        <div class="card-body">
+                          <div class="img-component cc-1x1">
+                            <img
+                              src="/images/post6.webp"
+                              alt=""
+                              loading="lazy"
+                              class="u-img-cover cc-top-left"
+                              sizes="(max-width: 800px) 100vw, 800px"
+                              srcset="
+                                /images/post6-p-500.webp   500w,
+                                /images/post6-p-800.webp   800w,
+                                /images/post6-p-1080.webp 1080w,
+                                /images/post6-p-1600.webp 1600w,
+                                /images/post6.webp        2000w
+                              "
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <h4>1x1</h4>
+                      <div class="styles__selector-callout cc-component">Image</div>
+                      <div class="styles__selector-callout cc-component">1x1</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h3 class="styles__section-label">Card</h3>
+              <div class="row">
+                <div class="col col-lg-4 col-md-6 col-sm-12">
+                  <div class="card">
+                    <div class="card-body">
+                      <h3 class="h4">Simple</h3>
+                      <div class="rich-text">
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                          labore.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col col-lg-4 col-md-6 col-sm-12">
+                  <div class="card">
+                    <div class="card-body">
+                      <span class="icon-color cc-accent u-mb-sm">
+                        <span class="icon cc-lg" aria-hidden="true">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                            <path
+                              d="M239.18,97.26A16.38,16.38,0,0,0,224.92,86l-59-4.76L143.14,26.15a16.36,16.36,0,0,0-30.27,0L90.11,81.23,31.08,86a16.46,16.46,0,0,0-9.37,28.86l45,38.83L53,211.75a16.38,16.38,0,0,0,24.5,17.82L128,198.49l50.53,31.08A16.4,16.4,0,0,0,203,211.75l-13.76-58.07,45-38.83A16.43,16.43,0,0,0,239.18,97.26Zm-15.34,5.47-48.7,42a8,8,0,0,0-2.56,7.91l14.88,62.8a.37.37,0,0,1-.17.48c-.18.14-.23.11-.38,0l-54.72-33.65a8,8,0,0,0-8.38,0L69.09,215.94c-.15.09-.19.12-.38,0a.37.37,0,0,1-.17-.48l14.88-62.8a8,8,0,0,0-2.56-7.91l-48.7-42c-.12-.1-.23-.19-.13-.5s.18-.27.33-.29l63.92-5.16A8,8,0,0,0,103,91.86l24.62-59.61c.08-.17.11-.25.35-.25s.27.08.35.25L153,91.86a8,8,0,0,0,6.75,4.92l63.92,5.16c.15,0,.24,0,.33.29S224,102.63,223.84,102.73Z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                      <h3 class="h4">Actionable</h3>
+                      <div class="rich-text u-mb-sm">
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                          labore.
+                        </p>
+                      </div>
+                      <a href="https://www.nocodesupply.co/mast" class="button">Button</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col col-lg-4 col-md-6 col-sm-12">
+                  <div class="card cc-hover">
+                    <div class="img-component cc-16x9">
+                      <img
+                        src="/images/post6.webp"
+                        alt=""
+                        loading="lazy"
+                        class="u-img-cover"
+                        sizes="(max-width: 800px) 100vw, 800px"
+                        srcset="
+                          /images/post6-p-500.webp   500w,
+                          /images/post6-p-800.webp   800w,
+                          /images/post6-p-1080.webp 1080w,
+                          /images/post6-p-1600.webp 1600w,
+                          /images/post6.webp        2000w
+                        "
+                      />
+                    </div>
+                    <div class="card-body">
+                      <h3 class="h4">Link cover</h3>
+                      <div class="rich-text">
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                          labore.
+                        </p>
+                      </div>
+                    </div>
+                    <a href="https://www.nocodesupply.co/mast" class="u-link-cover">
+                      <span class="u-sr-only">Learn more</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h3 class="styles__section-label">Table</h3>
+              <div class="table-component">
+                <table class="table">
+                  <thead class="table-head">
+                    <tr class="table-row cc-header">
+                      <th scope="col" class="table-cell"><div class="h4">Heading</div></th>
+                      <th scope="col" class="table-cell"><div class="h4">Heading</div></th>
+                      <th scope="col" class="table-cell"><div class="h4">Heading</div></th>
+                    </tr>
+                  </thead>
+                  <tbody class="table-body">
+                    <tr class="table-row">
+                      <td class="table-cell">
+                        <div class="rich-text"><p>Content in a cell</p></div>
+                      </td>
+                      <td class="table-cell">
+                        <div class="rich-text"><p>Content in a cell</p></div>
+                      </td>
+                      <td class="table-cell">
+                        <div class="rich-text"><p>Content in a cell</p></div>
+                      </td>
+                    </tr>
+                    <tr class="table-row">
+                      <td class="table-cell">
+                        <div class="rich-text"><p>Content in a cell</p></div>
+                      </td>
+                      <td colspan="2" class="table-cell">
+                        <div class="rich-text">
+                          <p>Content in a cell with a lot more content that needs to span two columns</p>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div>
+              <h3 class="styles__section-label">Eyebrow</h3>
+              <div class="eyebrow cc-rule">Lorem ipsum</div>
+              <h3 class="styles__section-label">Heading</h3>
+              <h1 role="presentation">Heading</h1>
+              <h3 class="styles__section-label">Rich Text</h3>
+              <div class="rich-text">
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                  dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                  aliquip ex ea commodo consequat.
+                </p>
+              </div>
+              <h3 class="styles__section-label">Plain Text</h3>
+              <p>This is some text inside of a div block.</p>
+            </div>
+          </div>
+        </section>
+        <div class="u-border cc-0"></div>
+        <section id="global" class="section">
+          <div class="container">
+            <h2 class="u-mb-sm">Global</h2>
+            <h3 class="styles__section-label">Nav Banner</h3>
+          </div>
+          <a href="#" class="nav-banner">
+            <div class="container u-text-center"><div class="eyebrow u-mb-0">Mast — a minimal CSS framework</div></div>
+          </a>
+          <div class="container"><h3 class="styles__section-label">Nav</h3></div>
+          <div>
+            <header class="nav">
+              <a id="skip-link" href="#main" class="nav-skip-link">Skip to Main Content</a>
+              <div class="container cc-nav">
+                <a href="/" class="nav-logo_link" aria-label="Home">
+                  <svg
+                    viewbox="0 0 101 27"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    role="img"
+                    aria-label="Mast"
+                    class="u-w-100"
+                  >
+                    <path
+                      d="M11.9187 26.6316H16.4157L23.1435 9.59964V26.6316H28.03V1.2076H21.5855L14.1849 20.0454L6.81977 1.2076H0.375244V26.6316H5.26175V9.74128L11.9187 26.6316Z"
+                      fill="currentColor"
+                    ></path>
+                    <path
+                      d="M50.2224 26.6316H55.9941L46.5044 1.2076H40.6264L31.0658 26.6316H36.4835L38.431 21.1785H48.3102L50.2224 26.6316ZM43.4237 7.08557L46.823 16.894H39.9536L43.4237 7.08557Z"
+                      fill="currentColor"
+                    ></path>
+                    <path
+                      d="M77.9103 18.7353C77.9103 14.9819 75.5025 12.9281 71.0409 12.0429L66.6855 11.1577C64.8442 10.8036 63.2508 10.06 63.2508 8.3249C63.2508 6.55443 64.738 5.06723 67.3583 5.06723C70.0494 5.06723 71.8907 6.87312 72.0678 9.52883H77.5208C77.1667 4.21741 72.9884 0.888916 67.2875 0.888916C61.799 0.888916 57.7978 4.14659 57.7978 8.679C57.7978 12.8927 60.7722 14.9819 64.6318 15.7255L68.8101 16.5399C70.9701 16.9648 72.2094 17.9209 72.2094 19.5143C72.2094 21.568 70.2619 22.772 67.5354 22.772C64.2423 22.772 62.4364 20.9661 62.2948 18.1687H56.8417C57.2312 23.551 61.2325 26.9857 67.6416 26.9857C74.0153 26.9857 77.9103 23.5864 77.9103 18.7353Z"
+                      fill="currentColor"
+                    ></path>
+                    <path
+                      d="M92.4503 26.6316V6.0587H100.488V1.2076H79.0656V6.0587H87.0681V26.6316H92.4503Z"
+                      fill="currentColor"
+                    ></path>
+                  </svg>
+                </a>
+                <button type="button" class="nav-menu_btn" aria-label="Open menu">
+                  <span class="nav-menu_btn-bar cc-top"></span>
+                  <span class="nav-menu_btn-bar cc-middle"></span>
+                  <span class="nav-menu_btn-bar cc-bottom"></span>
+                </button>
+                <nav class="nav-menu" aria-label="Main">
+                  <div class="nav-dropdown_overlay"></div>
+                  <div class="nav-menu_container">
+                    <a href="#" class="nav-link">Static Link</a>
+                    <div class="nav-dropdown">
+                      <button type="button" class="nav-link cc-dropdown-btn">
+                        <span>Simple Drop</span>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="100%"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          class="nav-dropdown_arrow"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M16.293 9.29297L12 13.586L7.70697 9.29297L6.29297 10.707L12 16.414L17.707 10.707L16.293 9.29297Z"
+                            fill="currentColor"
+                          ></path>
+                        </svg>
+                      </button>
+                      <div class="nav-dropdown_content">
+                        <a href="#" class="nav-link cc-dropdown-link">Link 1</a>
+                        <a href="#" class="nav-link cc-dropdown-link">Link 2</a>
+                        <a href="#" class="nav-link cc-dropdown-link">Link 3</a>
+                      </div>
+                    </div>
+                    <div class="nav-dropdown cc-mega">
+                      <button type="button" class="nav-link cc-dropdown-btn">
+                        <span>Mega Drop</span>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="100%"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          class="nav-dropdown_arrow"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M16.293 9.29297L12 13.586L7.70697 9.29297L6.29297 10.707L12 16.414L17.707 10.707L16.293 9.29297Z"
+                            fill="currentColor"
+                          ></path>
+                        </svg>
+                      </button>
+                      <div class="nav-dropdown_content cc-mega">
+                        <div class="container">
+                          <div class="row">
+                            <div class="col col-lg-3 col-md-6 col-sm-12">
+                              <h2 class="eyebrow">Category</h2>
+                              <ul role="list" class="u-mb-0 u-list-unstyled">
+                                <li><a href="#" class="nav-link cc-dropdown-link">Link 1</a></li>
+                                <li><a href="#" class="nav-link cc-dropdown-link">Link 2</a></li>
+                                <li class="u-mb-0"><a href="#" class="nav-link cc-dropdown-link">Link 3</a></li>
+                              </ul>
+                            </div>
+                            <div class="col col-lg-3 col-md-6 col-sm-12">
+                              <h2 class="eyebrow">Category</h2>
+                              <ul role="list" class="u-mb-0 u-list-unstyled">
+                                <li><a href="#" class="nav-link cc-dropdown-link">Link 1</a></li>
+                                <li><a href="#" class="nav-link cc-dropdown-link">Link 2</a></li>
+                                <li class="u-mb-0"><a href="#" class="nav-link cc-dropdown-link">Link 3</a></li>
+                              </ul>
+                            </div>
+                            <div class="col col-lg-3 col-md-6 col-sm-12">
+                              <h2 class="eyebrow">Category</h2>
+                              <ul role="list" class="u-mb-0 u-list-unstyled">
+                                <li><a href="#" class="nav-link cc-dropdown-link">Link 1</a></li>
+                                <li><a href="#" class="nav-link cc-dropdown-link">Link 2</a></li>
+                                <li class="u-mb-0"><a href="#" class="nav-link cc-dropdown-link">Link 3</a></li>
+                              </ul>
+                            </div>
+                            <div class="col col-lg-3 col-md-6 col-sm-12">
+                              <h2 class="eyebrow">Category</h2>
+                              <ul role="list" class="u-mb-0 u-list-unstyled">
+                                <li><a href="#" class="nav-link cc-dropdown-link">Link 1</a></li>
+                                <li><a href="#" class="nav-link cc-dropdown-link">Link 2</a></li>
+                                <li class="u-mb-0"><a href="#" class="nav-link cc-dropdown-link">Link 3</a></li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </nav>
+                <div class="nav-cta-wrapper"><a href="#" class="button">Primary CTA</a></div>
+              </div>
+            </header>
+          </div>
+          <div class="container"><h3 class="styles__section-label">Footer</h3></div>
+          <footer class="section cc-footer">
+            <div class="container">
+              <div class="row">
+                <div class="col col-sm-12">
+                  <div class="row row-justify-between u-h-100">
+                    <div class="col col-lg-12 col-sm-6">
+                      <a href="/" class="footer-logo_link" aria-label="Home">
+                        <svg
+                          viewbox="0 0 101 27"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          role="img"
+                          aria-label="Mast"
+                          class="u-w-100"
+                        >
+                          <path
+                            d="M11.9187 26.6316H16.4157L23.1435 9.59964V26.6316H28.03V1.2076H21.5855L14.1849 20.0454L6.81977 1.2076H0.375244V26.6316H5.26175V9.74128L11.9187 26.6316Z"
+                            fill="currentColor"
+                          ></path>
+                          <path
+                            d="M50.2224 26.6316H55.9941L46.5044 1.2076H40.6264L31.0658 26.6316H36.4835L38.431 21.1785H48.3102L50.2224 26.6316ZM43.4237 7.08557L46.823 16.894H39.9536L43.4237 7.08557Z"
+                            fill="currentColor"
+                          ></path>
+                          <path
+                            d="M77.9103 18.7353C77.9103 14.9819 75.5025 12.9281 71.0409 12.0429L66.6855 11.1577C64.8442 10.8036 63.2508 10.06 63.2508 8.3249C63.2508 6.55443 64.738 5.06723 67.3583 5.06723C70.0494 5.06723 71.8907 6.87312 72.0678 9.52883H77.5208C77.1667 4.21741 72.9884 0.888916 67.2875 0.888916C61.799 0.888916 57.7978 4.14659 57.7978 8.679C57.7978 12.8927 60.7722 14.9819 64.6318 15.7255L68.8101 16.5399C70.9701 16.9648 72.2094 17.9209 72.2094 19.5143C72.2094 21.568 70.2619 22.772 67.5354 22.772C64.2423 22.772 62.4364 20.9661 62.2948 18.1687H56.8417C57.2312 23.551 61.2325 26.9857 67.6416 26.9857C74.0153 26.9857 77.9103 23.5864 77.9103 18.7353Z"
+                            fill="currentColor"
+                          ></path>
+                          <path
+                            d="M92.4503 26.6316V6.0587H100.488V1.2076H79.0656V6.0587H87.0681V26.6316H92.4503Z"
+                            fill="currentColor"
+                          ></path>
+                        </svg>
+                      </a>
+                    </div>
+                    <div class="col col-shrink u-mt-auto">
+                      <div class="theme-toggle-component">
+                        <label class="theme-toggle-label">
+                          <span data-theme-toggle="dark-label" class="theme-toggle-state cc-base">
+                            <span class="icon-color u-mb-0">
+                              <span class="icon" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                                  <path
+                                    d="M240,96a8,8,0,0,1-8,8H216v16a8,8,0,0,1-16,0V104H184a8,8,0,0,1,0-16h16V72a8,8,0,0,1,16,0V88h16A8,8,0,0,1,240,96ZM144,56h8v8a8,8,0,0,0,16,0V56h8a8,8,0,0,0,0-16h-8V32a8,8,0,0,0-16,0v8h-8a8,8,0,0,0,0,16Zm72.77,97a8,8,0,0,1,1.43,8A96,96,0,1,1,95.07,37.8a8,8,0,0,1,10.6,9.06A88.07,88.07,0,0,0,209.14,150.33,8,8,0,0,1,216.77,153Zm-19.39,14.88c-1.79.09-3.59.14-5.38.14A104.11,104.11,0,0,1,88,64c0-1.79,0-3.59.14-5.38A80,80,0,1,0,197.38,167.86Z"
+                                  />
+                                </svg>
+                              </span>
+                            </span>
+                          </span>
+                          <span data-theme-toggle="light-label" class="theme-toggle-state cc-invert">
+                            <span class="icon-color u-mb-0">
+                              <span class="icon" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                                  <path
+                                    d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"
+                                  />
+                                </svg>
+                              </span>
+                            </span>
+                          </span>
+                          <input
+                            type="checkbox"
+                            data-theme-toggle="checkbox"
+                            class="theme-toggle-checkbox"
+                            aria-label="Switch between dark and light mode"
+                          />
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col col-lg-9 col-sm-12">
+                  <div class="row">
+                    <div class="col col-lg-3 col-md-6 col-xs-12">
+                      <ul role="list" class="u-mb-0 u-list-unstyled">
+                        <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                        <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                        <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                        <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                        <li class="u-mb-0"><a href="#" class="footer-link">Footer link</a></li>
+                      </ul>
+                    </div>
+                    <div class="col col-lg-3 col-md-6 col-xs-12">
+                      <ul role="list" class="u-mb-0 u-list-unstyled">
+                        <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                        <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                        <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                        <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                        <li class="u-mb-0"><a href="#" class="footer-link">Footer link</a></li>
+                      </ul>
+                    </div>
+                    <div class="col col-lg-3 col-md-6 col-xs-12">
+                      <ul role="list" class="u-mb-0 u-list-unstyled">
+                        <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                        <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                        <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                        <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                        <li class="u-mb-0"><a href="#" class="footer-link">Footer link</a></li>
+                      </ul>
+                    </div>
+                    <div class="col col-lg-3 col-md-6 col-xs-12">
+                      <ul role="list" class="u-mb-0 u-list-unstyled">
+                        <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                        <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                        <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                        <li class=""><a href="#" class="footer-link">Footer link</a></li>
+                        <li class="u-mb-0"><a href="#" class="footer-link">Footer link</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="u-border u-mt-md u-mb-md"></div>
+              <div class="row row-justify-between">
+                <div class="col col-shrink">
+                  <div>
+                    ©
+                    <span data-footer-year>2026</span>
+                    Company
+                  </div>
+                </div>
+                <div class="col col-shrink">
+                  <ul role="list" class="footer-social_list u-list-unstyled">
+                    <li class="u-mb-0">
+                      <a href="#" class="footer-social_link" aria-label="X">
+                        <span class="icon-color">
+                          <span class="icon cc-md" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                              <path
+                                d="M214.75,211.71l-62.6-98.38,61.77-67.95a8,8,0,0,0-11.84-10.76L143.24,99.34,102.75,35.71A8,8,0,0,0,96,32H48a8,8,0,0,0-6.75,12.3l62.6,98.37-61.77,68a8,8,0,1,0,11.84,10.76l58.84-64.72,40.49,63.63A8,8,0,0,0,160,224h48a8,8,0,0,0,6.75-12.29ZM164.39,208,62.57,48h29L193.43,208Z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                      </a>
+                    </li>
+                    <li class="u-mb-0">
+                      <a href="#" class="footer-social_link" aria-label="Instagram">
+                        <span class="icon-color">
+                          <span class="icon cc-md" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                              <path
+                                d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160ZM176,24H80A56.06,56.06,0,0,0,24,80v96a56.06,56.06,0,0,0,56,56h96a56.06,56.06,0,0,0,56-56V80A56.06,56.06,0,0,0,176,24Zm40,152a40,40,0,0,1-40,40H80a40,40,0,0,1-40-40V80A40,40,0,0,1,80,40h96a40,40,0,0,1,40,40ZM192,76a12,12,0,1,1-12-12A12,12,0,0,1,192,76Z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                      </a>
+                    </li>
+                    <li class="u-mb-0">
+                      <a href="#" class="footer-social_link" aria-label="LinkedIn">
+                        <span class="icon-color">
+                          <span class="icon cc-md" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                              <path
+                                d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24Zm0,192H40V40H216V216ZM96,112v64a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm88,28v36a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140ZM100,84A12,12,0,1,1,88,72,12,12,0,0,1,100,84Z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                      </a>
+                    </li>
+                    <li class="u-mb-0">
+                      <a href="#" class="footer-social_link" aria-label="YouTube">
+                        <span class="icon-color">
+                          <span class="icon cc-md" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                              <path
+                                d="M164.44,121.34l-48-32A8,8,0,0,0,104,96v64a8,8,0,0,0,12.44,6.66l48-32a8,8,0,0,0,0-13.32ZM120,145.05V111l25.58,17ZM234.33,69.52a24,24,0,0,0-14.49-16.4C185.56,39.88,131,40,128,40s-57.56-.12-91.84,13.12a24,24,0,0,0-14.49,16.4C19.08,79.5,16,97.74,16,128s3.08,48.5,5.67,58.48a24,24,0,0,0,14.49,16.41C69,215.56,120.4,216,127.34,216h1.32c6.94,0,58.37-.44,91.18-13.11a24,24,0,0,0,14.49-16.41c2.59-10,5.67-28.22,5.67-58.48S236.92,79.5,234.33,69.52Zm-15.49,113a8,8,0,0,1-4.77,5.49c-31.65,12.22-85.48,12-86,12H128c-.54,0-54.33.2-86-12a8,8,0,0,1-4.77-5.49C34.8,173.39,32,156.57,32,128s2.8-45.39,5.16-54.47A8,8,0,0,1,41.93,68c30.52-11.79,81.66-12,85.85-12h.27c.54,0,54.38-.18,86,12a8,8,0,0,1,4.77,5.49C221.2,82.61,224,99.43,224,128S221.2,173.39,218.84,182.47Z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </footer>
+          <div class="container">
+            <h3 id="theme-toggle" class="styles__section-label">Theme toggle</h3>
+            <div class="theme-toggle-component">
+              <label class="theme-toggle-label">
+                <span data-theme-toggle="dark-label" class="theme-toggle-state cc-base">
+                  <span class="icon-color u-mb-0">
+                    <span class="icon" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                        <path
+                          d="M240,96a8,8,0,0,1-8,8H216v16a8,8,0,0,1-16,0V104H184a8,8,0,0,1,0-16h16V72a8,8,0,0,1,16,0V88h16A8,8,0,0,1,240,96ZM144,56h8v8a8,8,0,0,0,16,0V56h8a8,8,0,0,0,0-16h-8V32a8,8,0,0,0-16,0v8h-8a8,8,0,0,0,0,16Zm72.77,97a8,8,0,0,1,1.43,8A96,96,0,1,1,95.07,37.8a8,8,0,0,1,10.6,9.06A88.07,88.07,0,0,0,209.14,150.33,8,8,0,0,1,216.77,153Zm-19.39,14.88c-1.79.09-3.59.14-5.38.14A104.11,104.11,0,0,1,88,64c0-1.79,0-3.59.14-5.38A80,80,0,1,0,197.38,167.86Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
+                <span data-theme-toggle="light-label" class="theme-toggle-state cc-invert">
+                  <span class="icon-color u-mb-0">
+                    <span class="icon" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                        <path
+                          d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </span>
+                <input
+                  type="checkbox"
+                  data-theme-toggle="checkbox"
+                  class="theme-toggle-checkbox"
+                  aria-label="Switch between dark and light mode"
+                />
+              </label>
+            </div>
+          </div>
+        </section>
+        <div class="u-border cc-0"></div>
+        <section id="build-mode" class="section">
+          <div class="container">
+            <h2 class="u-mb-sm">Build mode</h2>
+            <div>
+              <h3 class="styles__section-label">Section</h3>
+              <section class="section"><div class="container"></div></section>
+            </div>
+            <div>
+              <h3 class="styles__section-label">Grid</h3>
+              <div class="row">
+                <div class="col col-4">
+                  <div class="rich-text">
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                      nisi ut aliquip ex ea commodo consequat.
+                    </p>
+                  </div>
+                </div>
+                <div class="col col-4">
+                  <div class="rich-text">
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                      nisi ut aliquip ex ea commodo consequat.
+                    </p>
+                  </div>
+                </div>
+                <div class="col col-4">
+                  <div class="rich-text">
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                      nisi ut aliquip ex ea commodo consequat.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h3 class="styles__section-label">Content wrap</h3>
+              <div class="content-wrap" role="list">
+                <details class="accordion-component u-mb-sm" role="listitem">
+                  <summary class="accordion-trigger">
+                    <div class="accordion-title"><h3 class="h4 u-mb-0">Lorem ipsum?</h3></div>
+                    <svg
+                      class="accordion-icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="100%"
+                      viewBox="0 0 32 32"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M17 17L27.3137 17L27.3137 15H17V4.68631L15 4.68631L15 15H4.68629L4.68629 17L15 17V27.3137H17V17Z"
+                        fill="currentColor"
+                      ></path>
+                    </svg>
+                  </summary>
+                  <div data-accordion="content" class="accordion-content">
+                    <div class="accordion-content_spacer">
+                      <div class="rich-text">
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                          labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                          laboris nisi ut aliquip ex ea commodo consequat.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+                <details class="accordion-component u-mb-sm" role="listitem">
+                  <summary class="accordion-trigger">
+                    <div class="accordion-title"><h3 class="h4 u-mb-0">Lorem ipsum?</h3></div>
+                    <svg
+                      class="accordion-icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="100%"
+                      viewBox="0 0 32 32"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M17 17L27.3137 17L27.3137 15H17V4.68631L15 4.68631L15 15H4.68629L4.68629 17L15 17V27.3137H17V17Z"
+                        fill="currentColor"
+                      ></path>
+                    </svg>
+                  </summary>
+                  <div data-accordion="content" class="accordion-content">
+                    <div class="accordion-content_spacer">
+                      <div class="rich-text">
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                          labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                          laboris nisi ut aliquip ex ea commodo consequat.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+                <details class="accordion-component" role="listitem">
+                  <summary class="accordion-trigger">
+                    <div class="accordion-title"><h3 class="h4 u-mb-0">Lorem ipsum?</h3></div>
+                    <svg
+                      class="accordion-icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="100%"
+                      viewBox="0 0 32 32"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M17 17L27.3137 17L27.3137 15H17V4.68631L15 4.68631L15 15H4.68629L4.68629 17L15 17V27.3137H17V17Z"
+                        fill="currentColor"
+                      ></path>
+                    </svg>
+                  </summary>
+                  <div data-accordion="content" class="accordion-content">
+                    <div class="accordion-content_spacer">
+                      <div class="rich-text">
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                          labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                          laboris nisi ut aliquip ex ea commodo consequat.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+              </div>
+              <h3 class="styles__section-label">Spacer</h3>
+              <div class="spacer-component"></div>
+            </div>
+            <div>
+              <h3 class="styles__section-label">Border</h3>
+              <div class="u-border u-mt-lg"></div>
+            </div>
+          </div>
+        </section>
+        <div class="u-border cc-0"></div>
+        <section id="prevent-cleanup" class="section">
+          <div class="container">
+            <h2 class="u-mb-sm">Prevent style clean up</h2>
+            <div>
+              <div class="row">
+                <div class="col col-lg-4 col-md-6 col-sm-12">
+                  <p class="u-text-midgray-1">
+                    <em>
+                      This is where you can store elements and classes used in custom code to prevent their
+                      classes/styles from being cleaned up.
+                    </em>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="/js/main.js"></script>
+  </body>
+</html>
